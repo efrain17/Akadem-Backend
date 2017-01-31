@@ -10,8 +10,8 @@ const server = http.createServer(app)
 const port = process.env.PORT || 9000
 
 var connectionPostgres = {
-  user: 'efrain',
-  database: 'akadem',
+  user: 'postgres',
+  database: 'bd_akadem',
   password: '123456',
   host: 'localhost',
   port: 5432,
@@ -19,12 +19,12 @@ var connectionPostgres = {
   idleTimeoutMillis: 30000
 }
 
-var pool = new pg.Pool(connectionPostgres)
-pool.on('error', (err, client) => {
+global.pool = new pg.Pool(connectionPostgres)
+global.pool.on('error', (err, client) => {
   console.error('idle client error', err.message, err.stack)
 })
 
-app.use('/', express.static(__dirname + '/dist'))
+app.use('/', express.static(__dirname + '/public'))
 app.use('/apiPersonas', apiPersonas)
 app.all('/ag/*', (req, res) => {
   res.status(200).sendFile(

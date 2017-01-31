@@ -1,6 +1,6 @@
-export function ejecutarQuery (myPool, myquerry) {
+export function ejecutarQuery (myquerry) {
   return new Promise((resolve, reject) => {
-    myPool.connect((err, client, done) => {
+    global.pool.connect((err, client, done) => {
       if (err) return reject(err)
       client.query(myquerry, (err, result) => {
         done()

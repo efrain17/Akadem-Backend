@@ -31,8 +31,8 @@ var server = _http2.default.createServer(app);
 var port = process.env.PORT || 9000;
 
 var connectionPostgres = {
-  user: 'efrain',
-  database: 'akadem',
+  user: 'postgres',
+  database: 'bd_akadem',
   password: '123456',
   host: 'localhost',
   port: 5432,
@@ -40,7 +40,7 @@ var connectionPostgres = {
   idleTimeoutMillis: 30000
 };
 
-var pool = new _pg2.default.Pool(connectionPostgres);
+global.pool = new _pg2.default.Pool(connectionPostgres);
 pool.on('error', function (err, client) {
   console.error('idle client error', err.message, err.stack);
 });

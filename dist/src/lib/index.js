@@ -4,9 +4,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.ejecutarQuery = ejecutarQuery;
-function ejecutarQuery(myPool, myquerry) {
+function ejecutarQuery(myquerry) {
   return new Promise(function (resolve, reject) {
-    myPool.connect(function (err, client, done) {
+    global.pool.connect(function (err, client, done) {
       if (err) return reject(err);
       client.query(myquerry, function (err, result) {
         done();
