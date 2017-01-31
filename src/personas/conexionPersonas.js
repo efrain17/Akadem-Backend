@@ -1,4 +1,4 @@
-import ejecutarQuery from 'src/server/lib/index'
+import ejecutarQuery from '../lib/index'
 
 export function selectPersonas (data, myPool) {
   return ejecutarQuery(myPool, selectPersona)

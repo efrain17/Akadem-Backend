@@ -1,5 +1,5 @@
 import express from 'express'
-import selectPersonas from 'src/personas/conexionPersonas'
+import selectPersonas from './conexionPersonas'
 
 const router = express.Router()
 var pool

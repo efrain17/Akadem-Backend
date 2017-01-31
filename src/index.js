@@ -1,7 +1,7 @@
 import http from 'http'
 import express from 'express'
 import pg from 'pg'
-import apiPersonas from 'src/server/personas'
+import apiPersonas from './personas/index'
 import path from 'path'
 import bodyParser from 'body-parser'
 
