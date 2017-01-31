@@ -4,7 +4,7 @@
   "description": "sistema de administracion academica",
   "main": "index.js",
   "scripts": {
-    "lint": "standard",
+    "lint": "standard src/*.js src/**/*.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dist": "babel src/index.js src/**/*.js --out-dir dist --presets es2015",
     "serve": "node dist/src",
