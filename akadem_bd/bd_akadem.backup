@@ -1,0 +1,4883 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.2.19
+-- Dumped by pg_dump version 9.2.19
+-- Started on 2017-01-31 00:11:49
+
+SET statement_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- TOC entry 1 (class 3079 OID 11727)
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- TOC entry 2691 (class 0 OID 0)
+-- Dependencies: 1
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- TOC entry 169 (class 1259 OID 35488)
+-- Name: operadora_telefono; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE operadora_telefono (
+    id_operadora integer NOT NULL,
+    descripcion text,
+    estado boolean
+);
+
+
+ALTER TABLE public.operadora_telefono OWNER TO postgres;
+
+--
+-- TOC entry 170 (class 1259 OID 35494)
+-- Name: Operadora_telefono_id_operadora_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE "Operadora_telefono_id_operadora_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public."Operadora_telefono_id_operadora_seq" OWNER TO postgres;
+
+--
+-- TOC entry 2692 (class 0 OID 0)
+-- Dependencies: 170
+-- Name: Operadora_telefono_id_operadora_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE "Operadora_telefono_id_operadora_seq" OWNED BY operadora_telefono.id_operadora;
+
+
+--
+-- TOC entry 171 (class 1259 OID 35496)
+-- Name: persona; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE persona (
+    id_persona integer NOT NULL,
+    nombre_a text,
+    nombre_b text,
+    apellido_a text,
+    apellido_b text,
+    direccion text,
+    provincia text,
+    ciudad text,
+    fecha_nac date NOT NULL,
+    fecha_registro date NOT NULL
+);
+
+
+ALTER TABLE public.persona OWNER TO postgres;
+
+--
+-- TOC entry 172 (class 1259 OID 35502)
+-- Name: Persona_id_persona_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE "Persona_id_persona_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public."Persona_id_persona_seq" OWNER TO postgres;
+
+--
+-- TOC entry 2693 (class 0 OID 0)
+-- Dependencies: 172
+-- Name: Persona_id_persona_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE "Persona_id_persona_seq" OWNED BY persona.id_persona;
+
+
+--
+-- TOC entry 173 (class 1259 OID 35504)
+-- Name: telefono; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE telefono (
+    id_telefono integer NOT NULL,
+    id_tipo bigint NOT NULL,
+    id_operadora bigint NOT NULL,
+    numero text,
+    pais text
+);
+
+
+ALTER TABLE public.telefono OWNER TO postgres;
+
+--
+-- TOC entry 174 (class 1259 OID 35510)
+-- Name: Telefono_id_telefono_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE "Telefono_id_telefono_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public."Telefono_id_telefono_seq" OWNER TO postgres;
+
+--
+-- TOC entry 2694 (class 0 OID 0)
+-- Dependencies: 174
+-- Name: Telefono_id_telefono_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE "Telefono_id_telefono_seq" OWNED BY telefono.id_telefono;
+
+
+--
+-- TOC entry 175 (class 1259 OID 35512)
+-- Name: tipo_discapacidad; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE tipo_discapacidad (
+    id_tipo integer NOT NULL,
+    descripcion character varying(100) NOT NULL
+);
+
+
+ALTER TABLE public.tipo_discapacidad OWNER TO postgres;
+
+--
+-- TOC entry 176 (class 1259 OID 35515)
+-- Name: Tipo_discapacidad_id_tipo_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE "Tipo_discapacidad_id_tipo_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public."Tipo_discapacidad_id_tipo_seq" OWNER TO postgres;
+
+--
+-- TOC entry 2695 (class 0 OID 0)
+-- Dependencies: 176
+-- Name: Tipo_discapacidad_id_tipo_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE "Tipo_discapacidad_id_tipo_seq" OWNED BY tipo_discapacidad.id_tipo;
+
+
+--
+-- TOC entry 177 (class 1259 OID 35517)
+-- Name: tipo_funcionario; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE tipo_funcionario (
+    id_tipo integer NOT NULL,
+    descripcion character varying(100)
+);
+
+
+ALTER TABLE public.tipo_funcionario OWNER TO postgres;
+
+--
+-- TOC entry 178 (class 1259 OID 35520)
+-- Name: Tipo_funcionario_id_tipo_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE "Tipo_funcionario_id_tipo_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public."Tipo_funcionario_id_tipo_seq" OWNER TO postgres;
+
+--
+-- TOC entry 2696 (class 0 OID 0)
+-- Dependencies: 178
+-- Name: Tipo_funcionario_id_tipo_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE "Tipo_funcionario_id_tipo_seq" OWNED BY tipo_funcionario.id_tipo;
+
+
+--
+-- TOC entry 179 (class 1259 OID 35522)
+-- Name: tipo_telefono; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE tipo_telefono (
+    id_tipo integer NOT NULL,
+    descripcion character varying(100)
+);
+
+
+ALTER TABLE public.tipo_telefono OWNER TO postgres;
+
+--
+-- TOC entry 180 (class 1259 OID 35525)
+-- Name: Tipo_telefono_id_tipo_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE "Tipo_telefono_id_tipo_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public."Tipo_telefono_id_tipo_seq" OWNER TO postgres;
+
+--
+-- TOC entry 2697 (class 0 OID 0)
+-- Dependencies: 180
+-- Name: Tipo_telefono_id_tipo_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE "Tipo_telefono_id_tipo_seq" OWNED BY tipo_telefono.id_tipo;
+
+
+--
+-- TOC entry 181 (class 1259 OID 35527)
+-- Name: tipo_usuario; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE tipo_usuario (
+    id_tipo integer NOT NULL,
+    descripcion text
+);
+
+
+ALTER TABLE public.tipo_usuario OWNER TO postgres;
+
+--
+-- TOC entry 182 (class 1259 OID 35533)
+-- Name: Tipo_usuario_id_tipo_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE "Tipo_usuario_id_tipo_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public."Tipo_usuario_id_tipo_seq" OWNER TO postgres;
+
+--
+-- TOC entry 2698 (class 0 OID 0)
+-- Dependencies: 182
+-- Name: Tipo_usuario_id_tipo_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE "Tipo_usuario_id_tipo_seq" OWNED BY tipo_usuario.id_tipo;
+
+
+--
+-- TOC entry 183 (class 1259 OID 35535)
+-- Name: usuario; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE usuario (
+    id_usuario integer NOT NULL,
+    id_persona bigint NOT NULL,
+    id_tipo_usuario bigint NOT NULL,
+    estado boolean
+);
+
+
+ALTER TABLE public.usuario OWNER TO postgres;
+
+--
+-- TOC entry 184 (class 1259 OID 35538)
+-- Name: Usuario_id_usuario_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE "Usuario_id_usuario_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public."Usuario_id_usuario_seq" OWNER TO postgres;
+
+--
+-- TOC entry 2699 (class 0 OID 0)
+-- Dependencies: 184
+-- Name: Usuario_id_usuario_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE "Usuario_id_usuario_seq" OWNED BY usuario.id_usuario;
+
+
+--
+-- TOC entry 185 (class 1259 OID 35540)
+-- Name: acceso_sistema; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE acceso_sistema (
+    id_persona bigint NOT NULL,
+    correo text,
+    usuario text,
+    clave text
+);
+
+
+ALTER TABLE public.acceso_sistema OWNER TO postgres;
+
+--
+-- TOC entry 186 (class 1259 OID 35546)
+-- Name: activacion_servicio; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE activacion_servicio (
+    id_persona bigint NOT NULL,
+    id_periodo bigint NOT NULL,
+    estado boolean
+);
+
+
+ALTER TABLE public.activacion_servicio OWNER TO postgres;
+
+--
+-- TOC entry 187 (class 1259 OID 35549)
+-- Name: actividad_institucion; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE actividad_institucion (
+    id_actividad integer NOT NULL,
+    id_tipo bigint,
+    descripcion text,
+    fecha_registro date,
+    fecha_inicio date,
+    fecha_fin date,
+    hora_inicio time without time zone,
+    hora_fin time without time zone,
+    estado boolean
+);
+
+
+ALTER TABLE public.actividad_institucion OWNER TO postgres;
+
+--
+-- TOC entry 188 (class 1259 OID 35555)
+-- Name: actividad_institucion_id_actividad_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE actividad_institucion_id_actividad_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.actividad_institucion_id_actividad_seq OWNER TO postgres;
+
+--
+-- TOC entry 2700 (class 0 OID 0)
+-- Dependencies: 188
+-- Name: actividad_institucion_id_actividad_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE actividad_institucion_id_actividad_seq OWNED BY actividad_institucion.id_actividad;
+
+
+--
+-- TOC entry 189 (class 1259 OID 35557)
+-- Name: archivos; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE archivos (
+    id_archivo integer NOT NULL,
+    ruta text
+);
+
+
+ALTER TABLE public.archivos OWNER TO postgres;
+
+--
+-- TOC entry 190 (class 1259 OID 35563)
+-- Name: archivos_id_archivo_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE archivos_id_archivo_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.archivos_id_archivo_seq OWNER TO postgres;
+
+--
+-- TOC entry 2701 (class 0 OID 0)
+-- Dependencies: 190
+-- Name: archivos_id_archivo_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE archivos_id_archivo_seq OWNED BY archivos.id_archivo;
+
+
+--
+-- TOC entry 191 (class 1259 OID 35565)
+-- Name: archivos_tarea; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE archivos_tarea (
+    id_archivos bigint NOT NULL,
+    id_tarea bigint NOT NULL,
+    descripcion text
+);
+
+
+ALTER TABLE public.archivos_tarea OWNER TO postgres;
+
+--
+-- TOC entry 192 (class 1259 OID 35571)
+-- Name: area_academica; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE area_academica (
+    id_area_academica integer NOT NULL,
+    descripcion text
+);
+
+
+ALTER TABLE public.area_academica OWNER TO postgres;
+
+--
+-- TOC entry 193 (class 1259 OID 35577)
+-- Name: area_academica_id_area_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE area_academica_id_area_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.area_academica_id_area_seq OWNER TO postgres;
+
+--
+-- TOC entry 2702 (class 0 OID 0)
+-- Dependencies: 193
+-- Name: area_academica_id_area_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE area_academica_id_area_seq OWNED BY area_academica.id_area_academica;
+
+
+--
+-- TOC entry 194 (class 1259 OID 35579)
+-- Name: asignatura; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE asignatura (
+    id_asignatura integer NOT NULL,
+    id_area_academica bigint NOT NULL,
+    descripcion text
+);
+
+
+ALTER TABLE public.asignatura OWNER TO postgres;
+
+--
+-- TOC entry 195 (class 1259 OID 35585)
+-- Name: asignatura_id_asignatura_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE asignatura_id_asignatura_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.asignatura_id_asignatura_seq OWNER TO postgres;
+
+--
+-- TOC entry 2703 (class 0 OID 0)
+-- Dependencies: 195
+-- Name: asignatura_id_asignatura_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE asignatura_id_asignatura_seq OWNED BY asignatura.id_asignatura;
+
+
+--
+-- TOC entry 196 (class 1259 OID 35587)
+-- Name: bachillerato; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE bachillerato (
+    id_bachillerato integer NOT NULL,
+    id_especialidad bigint,
+    descripcion text
+);
+
+
+ALTER TABLE public.bachillerato OWNER TO postgres;
+
+--
+-- TOC entry 197 (class 1259 OID 35593)
+-- Name: bachillerato_id_bachillerato_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE bachillerato_id_bachillerato_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.bachillerato_id_bachillerato_seq OWNER TO postgres;
+
+--
+-- TOC entry 2704 (class 0 OID 0)
+-- Dependencies: 197
+-- Name: bachillerato_id_bachillerato_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE bachillerato_id_bachillerato_seq OWNED BY bachillerato.id_bachillerato;
+
+
+--
+-- TOC entry 198 (class 1259 OID 35595)
+-- Name: calificacion; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE calificacion (
+    id_calificacion integer NOT NULL,
+    id_clase_estudiante bigint,
+    id_sistema_notas bigint,
+    calificacion double precision,
+    fecha_registro date,
+    observacion text
+);
+
+
+ALTER TABLE public.calificacion OWNER TO postgres;
+
+--
+-- TOC entry 199 (class 1259 OID 35601)
+-- Name: calificacion_id_calificacion_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE calificacion_id_calificacion_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.calificacion_id_calificacion_seq OWNER TO postgres;
+
+--
+-- TOC entry 2705 (class 0 OID 0)
+-- Dependencies: 199
+-- Name: calificacion_id_calificacion_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE calificacion_id_calificacion_seq OWNED BY calificacion.id_calificacion;
+
+
+--
+-- TOC entry 200 (class 1259 OID 35603)
+-- Name: calificacion_tarea; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE calificacion_tarea (
+    d_calificacion bigint NOT NULL,
+    id_control_tarea bigint NOT NULL
+);
+
+
+ALTER TABLE public.calificacion_tarea OWNER TO postgres;
+
+--
+-- TOC entry 201 (class 1259 OID 35606)
+-- Name: clase; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE clase (
+    id_clase integer NOT NULL,
+    id_asignatura bigint,
+    id_funcionario bigint,
+    id_curso bigint
+);
+
+
+ALTER TABLE public.clase OWNER TO postgres;
+
+--
+-- TOC entry 202 (class 1259 OID 35609)
+-- Name: clase_estudiante; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE clase_estudiante (
+    id_clase_estudiante integer NOT NULL,
+    id_clase bigint,
+    id_estudiante bigint
+);
+
+
+ALTER TABLE public.clase_estudiante OWNER TO postgres;
+
+--
+-- TOC entry 203 (class 1259 OID 35612)
+-- Name: clase_estudiante_id_clase_estudiante_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE clase_estudiante_id_clase_estudiante_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.clase_estudiante_id_clase_estudiante_seq OWNER TO postgres;
+
+--
+-- TOC entry 2706 (class 0 OID 0)
+-- Dependencies: 203
+-- Name: clase_estudiante_id_clase_estudiante_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE clase_estudiante_id_clase_estudiante_seq OWNED BY clase_estudiante.id_clase_estudiante;
+
+
+--
+-- TOC entry 204 (class 1259 OID 35614)
+-- Name: clase_id_clase_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE clase_id_clase_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.clase_id_clase_seq OWNER TO postgres;
+
+--
+-- TOC entry 2707 (class 0 OID 0)
+-- Dependencies: 204
+-- Name: clase_id_clase_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE clase_id_clase_seq OWNED BY clase.id_clase;
+
+
+--
+-- TOC entry 205 (class 1259 OID 35616)
+-- Name: comunicacion; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE comunicacion (
+    id_comunicacion integer NOT NULL,
+    titulo text,
+    descripcion text,
+    fecha_envio date,
+    hora_envio time without time zone,
+    id_msg_template bigint
+);
+
+
+ALTER TABLE public.comunicacion OWNER TO postgres;
+
+--
+-- TOC entry 206 (class 1259 OID 35622)
+-- Name: comunicacion_id_comunicacion_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE comunicacion_id_comunicacion_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.comunicacion_id_comunicacion_seq OWNER TO postgres;
+
+--
+-- TOC entry 2708 (class 0 OID 0)
+-- Dependencies: 206
+-- Name: comunicacion_id_comunicacion_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE comunicacion_id_comunicacion_seq OWNED BY comunicacion.id_comunicacion;
+
+
+--
+-- TOC entry 207 (class 1259 OID 35624)
+-- Name: control_comunicacion; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE control_comunicacion (
+    id_control_comunicacion integer NOT NULL,
+    id_comunicacion bigint,
+    id_emisor bigint,
+    id_receptor bigint,
+    id_tipo bigint
+);
+
+
+ALTER TABLE public.control_comunicacion OWNER TO postgres;
+
+--
+-- TOC entry 208 (class 1259 OID 35627)
+-- Name: control_comunicaciones_id_control_comunicacion_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE control_comunicaciones_id_control_comunicacion_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.control_comunicaciones_id_control_comunicacion_seq OWNER TO postgres;
+
+--
+-- TOC entry 2709 (class 0 OID 0)
+-- Dependencies: 208
+-- Name: control_comunicaciones_id_control_comunicacion_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE control_comunicaciones_id_control_comunicacion_seq OWNED BY control_comunicacion.id_control_comunicacion;
+
+
+--
+-- TOC entry 209 (class 1259 OID 35629)
+-- Name: control_incidencia; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE control_incidencia (
+    id_control_incidencia integer NOT NULL,
+    id_incidencia bigint,
+    id_estudiante bigint,
+    id_funcionario bigint
+);
+
+
+ALTER TABLE public.control_incidencia OWNER TO postgres;
+
+--
+-- TOC entry 210 (class 1259 OID 35632)
+-- Name: control_incidencia_id_control_incidencia_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE control_incidencia_id_control_incidencia_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.control_incidencia_id_control_incidencia_seq OWNER TO postgres;
+
+--
+-- TOC entry 2710 (class 0 OID 0)
+-- Dependencies: 210
+-- Name: control_incidencia_id_control_incidencia_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE control_incidencia_id_control_incidencia_seq OWNED BY control_incidencia.id_control_incidencia;
+
+
+--
+-- TOC entry 211 (class 1259 OID 35634)
+-- Name: control_tarea; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE control_tarea (
+    id_control_tarea integer NOT NULL,
+    id_tarea bigint,
+    id_clase_estudiante bigint,
+    fecha_revision date,
+    observacion text,
+    estado boolean
+);
+
+
+ALTER TABLE public.control_tarea OWNER TO postgres;
+
+--
+-- TOC entry 212 (class 1259 OID 35640)
+-- Name: control_tareas_id_control_tarea_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE control_tareas_id_control_tarea_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.control_tareas_id_control_tarea_seq OWNER TO postgres;
+
+--
+-- TOC entry 2711 (class 0 OID 0)
+-- Dependencies: 212
+-- Name: control_tareas_id_control_tarea_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE control_tareas_id_control_tarea_seq OWNED BY control_tarea.id_control_tarea;
+
+
+--
+-- TOC entry 213 (class 1259 OID 35642)
+-- Name: control_tipo_funcionario; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE control_tipo_funcionario (
+    id_funcionario bigint NOT NULL,
+    id_tipo bigint NOT NULL,
+    estado boolean,
+    fecha_inicio date
+);
+
+
+ALTER TABLE public.control_tipo_funcionario OWNER TO postgres;
+
+--
+-- TOC entry 214 (class 1259 OID 35645)
+-- Name: curso; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE curso (
+    id_curso integer NOT NULL,
+    id_grado bigint,
+    id_paralelo bigint,
+    id_periodo bigint,
+    id_tipo_curso bigint
+);
+
+
+ALTER TABLE public.curso OWNER TO postgres;
+
+--
+-- TOC entry 215 (class 1259 OID 35648)
+-- Name: curso_bachillerato; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE curso_bachillerato (
+    id_curso bigint NOT NULL,
+    id_bachillerato bigint NOT NULL
+);
+
+
+ALTER TABLE public.curso_bachillerato OWNER TO postgres;
+
+--
+-- TOC entry 216 (class 1259 OID 35651)
+-- Name: curso_id_curso_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE curso_id_curso_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.curso_id_curso_seq OWNER TO postgres;
+
+--
+-- TOC entry 2712 (class 0 OID 0)
+-- Dependencies: 216
+-- Name: curso_id_curso_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE curso_id_curso_seq OWNED BY curso.id_curso;
+
+
+--
+-- TOC entry 217 (class 1259 OID 35653)
+-- Name: detalle_horario_atencion; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE detalle_horario_atencion (
+    id_horario_atencion bigint NOT NULL,
+    id_dia_laboral integer NOT NULL,
+    hora_ini time without time zone NOT NULL,
+    hora_fin time without time zone NOT NULL
+);
+
+
+ALTER TABLE public.detalle_horario_atencion OWNER TO postgres;
+
+--
+-- TOC entry 218 (class 1259 OID 35656)
+-- Name: dia_laboral; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE dia_laboral (
+    id_dia_laboral integer NOT NULL,
+    descripcion text
+);
+
+
+ALTER TABLE public.dia_laboral OWNER TO postgres;
+
+--
+-- TOC entry 219 (class 1259 OID 35662)
+-- Name: dia_laboral_id_dia_laboral_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE dia_laboral_id_dia_laboral_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.dia_laboral_id_dia_laboral_seq OWNER TO postgres;
+
+--
+-- TOC entry 2713 (class 0 OID 0)
+-- Dependencies: 219
+-- Name: dia_laboral_id_dia_laboral_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE dia_laboral_id_dia_laboral_seq OWNED BY dia_laboral.id_dia_laboral;
+
+
+--
+-- TOC entry 220 (class 1259 OID 35664)
+-- Name: discapacidad; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE discapacidad (
+    id_discapacidad bigint NOT NULL,
+    id_tipo bigint NOT NULL,
+    descripcion text
+);
+
+
+ALTER TABLE public.discapacidad OWNER TO postgres;
+
+--
+-- TOC entry 221 (class 1259 OID 35670)
+-- Name: discapacidad_persona; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE discapacidad_persona (
+    id_persona bigint NOT NULL,
+    id_discapacidad bigint NOT NULL,
+    porcentaje text
+);
+
+
+ALTER TABLE public.discapacidad_persona OWNER TO postgres;
+
+--
+-- TOC entry 222 (class 1259 OID 35676)
+-- Name: especialidad; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE especialidad (
+    id_especialidad integer NOT NULL,
+    descripcion text
+);
+
+
+ALTER TABLE public.especialidad OWNER TO postgres;
+
+--
+-- TOC entry 223 (class 1259 OID 35682)
+-- Name: especialidad_id_especialidad_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE especialidad_id_especialidad_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.especialidad_id_especialidad_seq OWNER TO postgres;
+
+--
+-- TOC entry 2714 (class 0 OID 0)
+-- Dependencies: 223
+-- Name: especialidad_id_especialidad_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE especialidad_id_especialidad_seq OWNED BY especialidad.id_especialidad;
+
+
+--
+-- TOC entry 224 (class 1259 OID 35684)
+-- Name: estado_actividad; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE estado_actividad (
+    id_estado_actividad integer NOT NULL,
+    descripcion text
+);
+
+
+ALTER TABLE public.estado_actividad OWNER TO postgres;
+
+--
+-- TOC entry 225 (class 1259 OID 35690)
+-- Name: estado_actividad_id_estado_actividad_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE estado_actividad_id_estado_actividad_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.estado_actividad_id_estado_actividad_seq OWNER TO postgres;
+
+--
+-- TOC entry 2715 (class 0 OID 0)
+-- Dependencies: 225
+-- Name: estado_actividad_id_estado_actividad_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE estado_actividad_id_estado_actividad_seq OWNED BY estado_actividad.id_estado_actividad;
+
+
+--
+-- TOC entry 226 (class 1259 OID 35692)
+-- Name: estudiante; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE estudiante (
+    id_estudiante bigint NOT NULL,
+    estado boolean,
+    fecha_ingreso date,
+    fecha_salida date
+);
+
+
+ALTER TABLE public.estudiante OWNER TO postgres;
+
+--
+-- TOC entry 227 (class 1259 OID 35695)
+-- Name: funcionario; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE funcionario (
+    id_funcionario bigint NOT NULL
+);
+
+
+ALTER TABLE public.funcionario OWNER TO postgres;
+
+--
+-- TOC entry 228 (class 1259 OID 35698)
+-- Name: grado; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE grado (
+    id_grado integer NOT NULL,
+    descripcion text
+);
+
+
+ALTER TABLE public.grado OWNER TO postgres;
+
+--
+-- TOC entry 229 (class 1259 OID 35704)
+-- Name: grado_id_grado_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE grado_id_grado_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.grado_id_grado_seq OWNER TO postgres;
+
+--
+-- TOC entry 2716 (class 0 OID 0)
+-- Dependencies: 229
+-- Name: grado_id_grado_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE grado_id_grado_seq OWNED BY grado.id_grado;
+
+
+--
+-- TOC entry 230 (class 1259 OID 35706)
+-- Name: horario_atencion; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE horario_atencion (
+    id_horario_atencion integer NOT NULL,
+    id_funcionario bigint NOT NULL,
+    estado boolean NOT NULL
+);
+
+
+ALTER TABLE public.horario_atencion OWNER TO postgres;
+
+--
+-- TOC entry 231 (class 1259 OID 35709)
+-- Name: horario_atencion_id_horario_atencion_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE horario_atencion_id_horario_atencion_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.horario_atencion_id_horario_atencion_seq OWNER TO postgres;
+
+--
+-- TOC entry 2717 (class 0 OID 0)
+-- Dependencies: 231
+-- Name: horario_atencion_id_horario_atencion_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE horario_atencion_id_horario_atencion_seq OWNED BY horario_atencion.id_horario_atencion;
+
+
+--
+-- TOC entry 232 (class 1259 OID 35711)
+-- Name: horario_clase; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE horario_clase (
+    id_clase bigint NOT NULL,
+    id_dia_laboral bigint NOT NULL,
+    hora_ini time without time zone,
+    hora_fin time without time zone
+);
+
+
+ALTER TABLE public.horario_clase OWNER TO postgres;
+
+--
+-- TOC entry 233 (class 1259 OID 35714)
+-- Name: incidencia; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE incidencia (
+    id_incidencia integer NOT NULL,
+    id_tipo_incidencia bigint,
+    id_prioridad_incidencia bigint,
+    motivo text,
+    fecha_evento date,
+    hora_evento time without time zone,
+    fecha_registro date,
+    hora_registro time without time zone
+);
+
+
+ALTER TABLE public.incidencia OWNER TO postgres;
+
+--
+-- TOC entry 234 (class 1259 OID 35720)
+-- Name: incidencia_id_incidencia_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE incidencia_id_incidencia_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.incidencia_id_incidencia_seq OWNER TO postgres;
+
+--
+-- TOC entry 2718 (class 0 OID 0)
+-- Dependencies: 234
+-- Name: incidencia_id_incidencia_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE incidencia_id_incidencia_seq OWNED BY incidencia.id_incidencia;
+
+
+--
+-- TOC entry 235 (class 1259 OID 35722)
+-- Name: justificacion; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE justificacion (
+    id_justificacion integer NOT NULL,
+    id_representante bigint,
+    fecha_registro date,
+    observacion text
+);
+
+
+ALTER TABLE public.justificacion OWNER TO postgres;
+
+--
+-- TOC entry 236 (class 1259 OID 35728)
+-- Name: justificacion_archivos; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE justificacion_archivos (
+    id_justificacion bigint NOT NULL,
+    id_archivo bigint NOT NULL,
+    descripcion text
+);
+
+
+ALTER TABLE public.justificacion_archivos OWNER TO postgres;
+
+--
+-- TOC entry 237 (class 1259 OID 35734)
+-- Name: justificacion_asistencia; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE justificacion_asistencia (
+    id_justificacion bigint NOT NULL,
+    id_registro_asistencia bigint NOT NULL
+);
+
+
+ALTER TABLE public.justificacion_asistencia OWNER TO postgres;
+
+--
+-- TOC entry 238 (class 1259 OID 35737)
+-- Name: justificacion_id_justificacion_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE justificacion_id_justificacion_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.justificacion_id_justificacion_seq OWNER TO postgres;
+
+--
+-- TOC entry 2719 (class 0 OID 0)
+-- Dependencies: 238
+-- Name: justificacion_id_justificacion_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE justificacion_id_justificacion_seq OWNED BY justificacion.id_justificacion;
+
+
+--
+-- TOC entry 239 (class 1259 OID 35739)
+-- Name: justificacion_incidencia; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE justificacion_incidencia (
+    id_justificacion bigint NOT NULL,
+    id_control_incidencia bigint NOT NULL
+);
+
+
+ALTER TABLE public.justificacion_incidencia OWNER TO postgres;
+
+--
+-- TOC entry 240 (class 1259 OID 35742)
+-- Name: justificacion_tarea; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE justificacion_tarea (
+    id_justificacion bigint NOT NULL,
+    id_control_tarea bigint NOT NULL
+);
+
+
+ALTER TABLE public.justificacion_tarea OWNER TO postgres;
+
+--
+-- TOC entry 241 (class 1259 OID 35745)
+-- Name: msg_template; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE msg_template (
+    id_msg_template integer NOT NULL,
+    id_tipo_msg_template bigint,
+    descripcion text
+);
+
+
+ALTER TABLE public.msg_template OWNER TO postgres;
+
+--
+-- TOC entry 242 (class 1259 OID 35751)
+-- Name: msg_template_id_msg_template_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE msg_template_id_msg_template_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.msg_template_id_msg_template_seq OWNER TO postgres;
+
+--
+-- TOC entry 2720 (class 0 OID 0)
+-- Dependencies: 242
+-- Name: msg_template_id_msg_template_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE msg_template_id_msg_template_seq OWNED BY msg_template.id_msg_template;
+
+
+--
+-- TOC entry 243 (class 1259 OID 35753)
+-- Name: pago_pensiones; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE pago_pensiones (
+    id_periodo bigint NOT NULL,
+    id_estudiante bigint NOT NULL,
+    fecha_limite date,
+    fecha_pago date,
+    valor double precision,
+    descuento double precision,
+    total_pagado double precision,
+    estado boolean
+);
+
+
+ALTER TABLE public.pago_pensiones OWNER TO postgres;
+
+--
+-- TOC entry 244 (class 1259 OID 35756)
+-- Name: paralelo; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE paralelo (
+    id_paralelo integer NOT NULL,
+    descripcion text
+);
+
+
+ALTER TABLE public.paralelo OWNER TO postgres;
+
+--
+-- TOC entry 245 (class 1259 OID 35762)
+-- Name: paralelo_id_paralelo_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE paralelo_id_paralelo_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.paralelo_id_paralelo_seq OWNER TO postgres;
+
+--
+-- TOC entry 2721 (class 0 OID 0)
+-- Dependencies: 245
+-- Name: paralelo_id_paralelo_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE paralelo_id_paralelo_seq OWNED BY paralelo.id_paralelo;
+
+
+--
+-- TOC entry 246 (class 1259 OID 35764)
+-- Name: periodo; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE periodo (
+    id_periodo integer NOT NULL,
+    fecha_inicio date,
+    fecha_fin date,
+    descripcion text,
+    estado boolean
+);
+
+
+ALTER TABLE public.periodo OWNER TO postgres;
+
+--
+-- TOC entry 247 (class 1259 OID 35770)
+-- Name: periodo_id_periodo_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE periodo_id_periodo_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.periodo_id_periodo_seq OWNER TO postgres;
+
+--
+-- TOC entry 2722 (class 0 OID 0)
+-- Dependencies: 247
+-- Name: periodo_id_periodo_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE periodo_id_periodo_seq OWNED BY periodo.id_periodo;
+
+
+--
+-- TOC entry 248 (class 1259 OID 35772)
+-- Name: prioridad_incidencia; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE prioridad_incidencia (
+    id_prioridad_incidencia integer NOT NULL,
+    descripcion text
+);
+
+
+ALTER TABLE public.prioridad_incidencia OWNER TO postgres;
+
+--
+-- TOC entry 249 (class 1259 OID 35778)
+-- Name: prioridad_incidencia_id_prioridad_incidencia_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE prioridad_incidencia_id_prioridad_incidencia_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.prioridad_incidencia_id_prioridad_incidencia_seq OWNER TO postgres;
+
+--
+-- TOC entry 2723 (class 0 OID 0)
+-- Dependencies: 249
+-- Name: prioridad_incidencia_id_prioridad_incidencia_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE prioridad_incidencia_id_prioridad_incidencia_seq OWNED BY prioridad_incidencia.id_prioridad_incidencia;
+
+
+--
+-- TOC entry 250 (class 1259 OID 35780)
+-- Name: registro_asistencia; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE registro_asistencia (
+    id_registro_asistencia integer NOT NULL,
+    id_clase_estudiante bigint,
+    id_dia_laboral bigint,
+    fecha_clase date,
+    hora_ingreso time without time zone,
+    hora_salida time without time zone,
+    observacion text,
+    estado boolean
+);
+
+
+ALTER TABLE public.registro_asistencia OWNER TO postgres;
+
+--
+-- TOC entry 251 (class 1259 OID 35786)
+-- Name: registro_asistencia_id_registro_asistencia_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE registro_asistencia_id_registro_asistencia_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.registro_asistencia_id_registro_asistencia_seq OWNER TO postgres;
+
+--
+-- TOC entry 2724 (class 0 OID 0)
+-- Dependencies: 251
+-- Name: registro_asistencia_id_registro_asistencia_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE registro_asistencia_id_registro_asistencia_seq OWNED BY registro_asistencia.id_registro_asistencia;
+
+
+--
+-- TOC entry 252 (class 1259 OID 35788)
+-- Name: representacion; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE representacion (
+    id_representante bigint NOT NULL,
+    id_estudiante bigint NOT NULL
+);
+
+
+ALTER TABLE public.representacion OWNER TO postgres;
+
+--
+-- TOC entry 253 (class 1259 OID 35791)
+-- Name: representante; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE representante (
+    id_representante bigint NOT NULL,
+    actividad_laboral text,
+    estado boolean
+);
+
+
+ALTER TABLE public.representante OWNER TO postgres;
+
+--
+-- TOC entry 254 (class 1259 OID 35797)
+-- Name: seguimiento_actividad; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE seguimiento_actividad (
+    id_seguimiento integer NOT NULL,
+    id_usuario bigint,
+    id_estado_actividad bigint,
+    fecha date,
+    hora time without time zone,
+    observacion text
+);
+
+
+ALTER TABLE public.seguimiento_actividad OWNER TO postgres;
+
+--
+-- TOC entry 255 (class 1259 OID 35803)
+-- Name: seguimiento_actividad_id_seguimiento_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE seguimiento_actividad_id_seguimiento_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.seguimiento_actividad_id_seguimiento_seq OWNER TO postgres;
+
+--
+-- TOC entry 2725 (class 0 OID 0)
+-- Dependencies: 255
+-- Name: seguimiento_actividad_id_seguimiento_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE seguimiento_actividad_id_seguimiento_seq OWNED BY seguimiento_actividad.id_seguimiento;
+
+
+--
+-- TOC entry 256 (class 1259 OID 35805)
+-- Name: seguimiento_cita; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE seguimiento_cita (
+    id_cita bigint NOT NULL,
+    id_seguimiento bigint NOT NULL
+);
+
+
+ALTER TABLE public.seguimiento_cita OWNER TO postgres;
+
+--
+-- TOC entry 257 (class 1259 OID 35808)
+-- Name: seguimiento_comunicacion; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE seguimiento_comunicacion (
+    id_control_comunicacion bigint NOT NULL,
+    id_seguimiento bigint NOT NULL
+);
+
+
+ALTER TABLE public.seguimiento_comunicacion OWNER TO postgres;
+
+--
+-- TOC entry 258 (class 1259 OID 35811)
+-- Name: seguimiento_incidencia; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE seguimiento_incidencia (
+    id_control_incidencia bigint NOT NULL,
+    id_seguimiento bigint NOT NULL
+);
+
+
+ALTER TABLE public.seguimiento_incidencia OWNER TO postgres;
+
+--
+-- TOC entry 259 (class 1259 OID 35814)
+-- Name: seguimiento_justificacion; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE seguimiento_justificacion (
+    id_justificacion bigint NOT NULL,
+    id_seguimiento bigint NOT NULL
+);
+
+
+ALTER TABLE public.seguimiento_justificacion OWNER TO postgres;
+
+--
+-- TOC entry 260 (class 1259 OID 35817)
+-- Name: seguimiento_tarea; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE seguimiento_tarea (
+    id_control_tarea bigint NOT NULL,
+    id_seguimiento bigint NOT NULL
+);
+
+
+ALTER TABLE public.seguimiento_tarea OWNER TO postgres;
+
+--
+-- TOC entry 261 (class 1259 OID 35820)
+-- Name: sistema_calificaciones; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE sistema_calificaciones (
+    id_sistema_calificaciones integer NOT NULL,
+    descripcion text,
+    estructura_anual text,
+    sub_estructura_anual text
+);
+
+
+ALTER TABLE public.sistema_calificaciones OWNER TO postgres;
+
+--
+-- TOC entry 262 (class 1259 OID 35826)
+-- Name: sistema_calificaciones_id_sistema_calificaciones_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE sistema_calificaciones_id_sistema_calificaciones_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.sistema_calificaciones_id_sistema_calificaciones_seq OWNER TO postgres;
+
+--
+-- TOC entry 2726 (class 0 OID 0)
+-- Dependencies: 262
+-- Name: sistema_calificaciones_id_sistema_calificaciones_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE sistema_calificaciones_id_sistema_calificaciones_seq OWNED BY sistema_calificaciones.id_sistema_calificaciones;
+
+
+--
+-- TOC entry 263 (class 1259 OID 35828)
+-- Name: sistema_notas; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE sistema_notas (
+    id_sistema_notas integer NOT NULL,
+    id_sistema_calificaciones bigint,
+    descripcion text,
+    rango_min text,
+    rango_max text,
+    estructura_anual text,
+    sub_estructura_anual text
+);
+
+
+ALTER TABLE public.sistema_notas OWNER TO postgres;
+
+--
+-- TOC entry 264 (class 1259 OID 35834)
+-- Name: sistema_notas_id_sistema_notas_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE sistema_notas_id_sistema_notas_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.sistema_notas_id_sistema_notas_seq OWNER TO postgres;
+
+--
+-- TOC entry 2727 (class 0 OID 0)
+-- Dependencies: 264
+-- Name: sistema_notas_id_sistema_notas_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE sistema_notas_id_sistema_notas_seq OWNED BY sistema_notas.id_sistema_notas;
+
+
+--
+-- TOC entry 265 (class 1259 OID 35836)
+-- Name: solicitud_cita; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE solicitud_cita (
+    id_cita integer NOT NULL,
+    id_remitente bigint NOT NULL,
+    id_funcionario bigint NOT NULL,
+    id_representante bigint NOT NULL,
+    descripcion text,
+    fecha_cita date,
+    hora_ini time without time zone NOT NULL,
+    hora_fin time without time zone NOT NULL
+);
+
+
+ALTER TABLE public.solicitud_cita OWNER TO postgres;
+
+--
+-- TOC entry 266 (class 1259 OID 35842)
+-- Name: solicitud_cita_id_cita_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE solicitud_cita_id_cita_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.solicitud_cita_id_cita_seq OWNER TO postgres;
+
+--
+-- TOC entry 2728 (class 0 OID 0)
+-- Dependencies: 266
+-- Name: solicitud_cita_id_cita_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE solicitud_cita_id_cita_seq OWNED BY solicitud_cita.id_cita;
+
+
+--
+-- TOC entry 267 (class 1259 OID 35844)
+-- Name: tarea; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE tarea (
+    id_tarea integer NOT NULL,
+    titulo text,
+    descripcion text,
+    fecha_registro date,
+    fecha_entrega date
+);
+
+
+ALTER TABLE public.tarea OWNER TO postgres;
+
+--
+-- TOC entry 268 (class 1259 OID 35850)
+-- Name: tarea_id_tarea_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE tarea_id_tarea_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.tarea_id_tarea_seq OWNER TO postgres;
+
+--
+-- TOC entry 2729 (class 0 OID 0)
+-- Dependencies: 268
+-- Name: tarea_id_tarea_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE tarea_id_tarea_seq OWNED BY tarea.id_tarea;
+
+
+--
+-- TOC entry 269 (class 1259 OID 35852)
+-- Name: telefono_persona; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE telefono_persona (
+    id_persona bigint NOT NULL,
+    id_telefono bigint NOT NULL
+);
+
+
+ALTER TABLE public.telefono_persona OWNER TO postgres;
+
+--
+-- TOC entry 270 (class 1259 OID 35855)
+-- Name: tipo_actividad_institucion; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE tipo_actividad_institucion (
+    id_tipo_actividad integer NOT NULL,
+    descripcion text
+);
+
+
+ALTER TABLE public.tipo_actividad_institucion OWNER TO postgres;
+
+--
+-- TOC entry 271 (class 1259 OID 35861)
+-- Name: tipo_actividad_institucion_id_tipo_actividad_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE tipo_actividad_institucion_id_tipo_actividad_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.tipo_actividad_institucion_id_tipo_actividad_seq OWNER TO postgres;
+
+--
+-- TOC entry 2730 (class 0 OID 0)
+-- Dependencies: 271
+-- Name: tipo_actividad_institucion_id_tipo_actividad_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE tipo_actividad_institucion_id_tipo_actividad_seq OWNED BY tipo_actividad_institucion.id_tipo_actividad;
+
+
+--
+-- TOC entry 272 (class 1259 OID 35863)
+-- Name: tipo_curso; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE tipo_curso (
+    id_tipo_curso integer NOT NULL,
+    descripcion text
+);
+
+
+ALTER TABLE public.tipo_curso OWNER TO postgres;
+
+--
+-- TOC entry 273 (class 1259 OID 35869)
+-- Name: tipo_curso_id_tipo_curso_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE tipo_curso_id_tipo_curso_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.tipo_curso_id_tipo_curso_seq OWNER TO postgres;
+
+--
+-- TOC entry 2731 (class 0 OID 0)
+-- Dependencies: 273
+-- Name: tipo_curso_id_tipo_curso_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE tipo_curso_id_tipo_curso_seq OWNED BY tipo_curso.id_tipo_curso;
+
+
+--
+-- TOC entry 274 (class 1259 OID 35871)
+-- Name: tipo_envio_comunicacion; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE tipo_envio_comunicacion (
+    id_tipo_envio_comunicacion integer NOT NULL,
+    descripcion text
+);
+
+
+ALTER TABLE public.tipo_envio_comunicacion OWNER TO postgres;
+
+--
+-- TOC entry 2732 (class 0 OID 0)
+-- Dependencies: 274
+-- Name: TABLE tipo_envio_comunicacion; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON TABLE tipo_envio_comunicacion IS 'Esta tabla es para indicar si la comunicacion es de padre a padre o de padre a docente por ejemplo, se debe a que resultaria mas facil asi saberlo que buscar el tipo de usuario de cada uno';
+
+
+--
+-- TOC entry 275 (class 1259 OID 35877)
+-- Name: tipo_envio_comunicacion_id_tipo_envio_comunicacion_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE tipo_envio_comunicacion_id_tipo_envio_comunicacion_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.tipo_envio_comunicacion_id_tipo_envio_comunicacion_seq OWNER TO postgres;
+
+--
+-- TOC entry 2733 (class 0 OID 0)
+-- Dependencies: 275
+-- Name: tipo_envio_comunicacion_id_tipo_envio_comunicacion_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE tipo_envio_comunicacion_id_tipo_envio_comunicacion_seq OWNED BY tipo_envio_comunicacion.id_tipo_envio_comunicacion;
+
+
+--
+-- TOC entry 276 (class 1259 OID 35879)
+-- Name: tipo_incidencia; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE tipo_incidencia (
+    id_tipo_incidencia integer NOT NULL,
+    descripcion text
+);
+
+
+ALTER TABLE public.tipo_incidencia OWNER TO postgres;
+
+--
+-- TOC entry 277 (class 1259 OID 35885)
+-- Name: tipo_incidencia_id_tipo_incidencia_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE tipo_incidencia_id_tipo_incidencia_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.tipo_incidencia_id_tipo_incidencia_seq OWNER TO postgres;
+
+--
+-- TOC entry 2734 (class 0 OID 0)
+-- Dependencies: 277
+-- Name: tipo_incidencia_id_tipo_incidencia_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE tipo_incidencia_id_tipo_incidencia_seq OWNED BY tipo_incidencia.id_tipo_incidencia;
+
+
+--
+-- TOC entry 278 (class 1259 OID 35887)
+-- Name: tipo_msg_template; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE tipo_msg_template (
+    id_tipo_msg_template integer NOT NULL,
+    descripcion text
+);
+
+
+ALTER TABLE public.tipo_msg_template OWNER TO postgres;
+
+--
+-- TOC entry 279 (class 1259 OID 35893)
+-- Name: tipo_msg_template_id_tipo_msg_template_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE tipo_msg_template_id_tipo_msg_template_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.tipo_msg_template_id_tipo_msg_template_seq OWNER TO postgres;
+
+--
+-- TOC entry 2735 (class 0 OID 0)
+-- Dependencies: 279
+-- Name: tipo_msg_template_id_tipo_msg_template_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE tipo_msg_template_id_tipo_msg_template_seq OWNED BY tipo_msg_template.id_tipo_msg_template;
+
+
+--
+-- TOC entry 2209 (class 2604 OID 35895)
+-- Name: id_actividad; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY actividad_institucion ALTER COLUMN id_actividad SET DEFAULT nextval('actividad_institucion_id_actividad_seq'::regclass);
+
+
+--
+-- TOC entry 2210 (class 2604 OID 35896)
+-- Name: id_archivo; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY archivos ALTER COLUMN id_archivo SET DEFAULT nextval('archivos_id_archivo_seq'::regclass);
+
+
+--
+-- TOC entry 2211 (class 2604 OID 35897)
+-- Name: id_area_academica; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY area_academica ALTER COLUMN id_area_academica SET DEFAULT nextval('area_academica_id_area_seq'::regclass);
+
+
+--
+-- TOC entry 2212 (class 2604 OID 35898)
+-- Name: id_asignatura; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY asignatura ALTER COLUMN id_asignatura SET DEFAULT nextval('asignatura_id_asignatura_seq'::regclass);
+
+
+--
+-- TOC entry 2213 (class 2604 OID 35899)
+-- Name: id_bachillerato; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY bachillerato ALTER COLUMN id_bachillerato SET DEFAULT nextval('bachillerato_id_bachillerato_seq'::regclass);
+
+
+--
+-- TOC entry 2214 (class 2604 OID 35900)
+-- Name: id_calificacion; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY calificacion ALTER COLUMN id_calificacion SET DEFAULT nextval('calificacion_id_calificacion_seq'::regclass);
+
+
+--
+-- TOC entry 2215 (class 2604 OID 35901)
+-- Name: id_clase; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY clase ALTER COLUMN id_clase SET DEFAULT nextval('clase_id_clase_seq'::regclass);
+
+
+--
+-- TOC entry 2216 (class 2604 OID 35902)
+-- Name: id_clase_estudiante; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY clase_estudiante ALTER COLUMN id_clase_estudiante SET DEFAULT nextval('clase_estudiante_id_clase_estudiante_seq'::regclass);
+
+
+--
+-- TOC entry 2217 (class 2604 OID 35903)
+-- Name: id_comunicacion; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY comunicacion ALTER COLUMN id_comunicacion SET DEFAULT nextval('comunicacion_id_comunicacion_seq'::regclass);
+
+
+--
+-- TOC entry 2218 (class 2604 OID 35904)
+-- Name: id_control_comunicacion; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY control_comunicacion ALTER COLUMN id_control_comunicacion SET DEFAULT nextval('control_comunicaciones_id_control_comunicacion_seq'::regclass);
+
+
+--
+-- TOC entry 2219 (class 2604 OID 35905)
+-- Name: id_control_incidencia; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY control_incidencia ALTER COLUMN id_control_incidencia SET DEFAULT nextval('control_incidencia_id_control_incidencia_seq'::regclass);
+
+
+--
+-- TOC entry 2220 (class 2604 OID 35906)
+-- Name: id_control_tarea; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY control_tarea ALTER COLUMN id_control_tarea SET DEFAULT nextval('control_tareas_id_control_tarea_seq'::regclass);
+
+
+--
+-- TOC entry 2221 (class 2604 OID 35907)
+-- Name: id_curso; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY curso ALTER COLUMN id_curso SET DEFAULT nextval('curso_id_curso_seq'::regclass);
+
+
+--
+-- TOC entry 2222 (class 2604 OID 35908)
+-- Name: id_dia_laboral; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY dia_laboral ALTER COLUMN id_dia_laboral SET DEFAULT nextval('dia_laboral_id_dia_laboral_seq'::regclass);
+
+
+--
+-- TOC entry 2223 (class 2604 OID 35909)
+-- Name: id_especialidad; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY especialidad ALTER COLUMN id_especialidad SET DEFAULT nextval('especialidad_id_especialidad_seq'::regclass);
+
+
+--
+-- TOC entry 2224 (class 2604 OID 35910)
+-- Name: id_estado_actividad; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY estado_actividad ALTER COLUMN id_estado_actividad SET DEFAULT nextval('estado_actividad_id_estado_actividad_seq'::regclass);
+
+
+--
+-- TOC entry 2225 (class 2604 OID 35911)
+-- Name: id_grado; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY grado ALTER COLUMN id_grado SET DEFAULT nextval('grado_id_grado_seq'::regclass);
+
+
+--
+-- TOC entry 2226 (class 2604 OID 35912)
+-- Name: id_horario_atencion; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY horario_atencion ALTER COLUMN id_horario_atencion SET DEFAULT nextval('horario_atencion_id_horario_atencion_seq'::regclass);
+
+
+--
+-- TOC entry 2227 (class 2604 OID 35913)
+-- Name: id_incidencia; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY incidencia ALTER COLUMN id_incidencia SET DEFAULT nextval('incidencia_id_incidencia_seq'::regclass);
+
+
+--
+-- TOC entry 2228 (class 2604 OID 35914)
+-- Name: id_justificacion; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY justificacion ALTER COLUMN id_justificacion SET DEFAULT nextval('justificacion_id_justificacion_seq'::regclass);
+
+
+--
+-- TOC entry 2229 (class 2604 OID 35915)
+-- Name: id_msg_template; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY msg_template ALTER COLUMN id_msg_template SET DEFAULT nextval('msg_template_id_msg_template_seq'::regclass);
+
+
+--
+-- TOC entry 2201 (class 2604 OID 35916)
+-- Name: id_operadora; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY operadora_telefono ALTER COLUMN id_operadora SET DEFAULT nextval('"Operadora_telefono_id_operadora_seq"'::regclass);
+
+
+--
+-- TOC entry 2230 (class 2604 OID 35917)
+-- Name: id_paralelo; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY paralelo ALTER COLUMN id_paralelo SET DEFAULT nextval('paralelo_id_paralelo_seq'::regclass);
+
+
+--
+-- TOC entry 2231 (class 2604 OID 35918)
+-- Name: id_periodo; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY periodo ALTER COLUMN id_periodo SET DEFAULT nextval('periodo_id_periodo_seq'::regclass);
+
+
+--
+-- TOC entry 2202 (class 2604 OID 35919)
+-- Name: id_persona; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY persona ALTER COLUMN id_persona SET DEFAULT nextval('"Persona_id_persona_seq"'::regclass);
+
+
+--
+-- TOC entry 2232 (class 2604 OID 35920)
+-- Name: id_prioridad_incidencia; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY prioridad_incidencia ALTER COLUMN id_prioridad_incidencia SET DEFAULT nextval('prioridad_incidencia_id_prioridad_incidencia_seq'::regclass);
+
+
+--
+-- TOC entry 2233 (class 2604 OID 35921)
+-- Name: id_registro_asistencia; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY registro_asistencia ALTER COLUMN id_registro_asistencia SET DEFAULT nextval('registro_asistencia_id_registro_asistencia_seq'::regclass);
+
+
+--
+-- TOC entry 2234 (class 2604 OID 35922)
+-- Name: id_seguimiento; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY seguimiento_actividad ALTER COLUMN id_seguimiento SET DEFAULT nextval('seguimiento_actividad_id_seguimiento_seq'::regclass);
+
+
+--
+-- TOC entry 2235 (class 2604 OID 35923)
+-- Name: id_sistema_calificaciones; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY sistema_calificaciones ALTER COLUMN id_sistema_calificaciones SET DEFAULT nextval('sistema_calificaciones_id_sistema_calificaciones_seq'::regclass);
+
+
+--
+-- TOC entry 2236 (class 2604 OID 35924)
+-- Name: id_sistema_notas; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY sistema_notas ALTER COLUMN id_sistema_notas SET DEFAULT nextval('sistema_notas_id_sistema_notas_seq'::regclass);
+
+
+--
+-- TOC entry 2237 (class 2604 OID 35925)
+-- Name: id_cita; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY solicitud_cita ALTER COLUMN id_cita SET DEFAULT nextval('solicitud_cita_id_cita_seq'::regclass);
+
+
+--
+-- TOC entry 2238 (class 2604 OID 35926)
+-- Name: id_tarea; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tarea ALTER COLUMN id_tarea SET DEFAULT nextval('tarea_id_tarea_seq'::regclass);
+
+
+--
+-- TOC entry 2203 (class 2604 OID 35927)
+-- Name: id_telefono; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY telefono ALTER COLUMN id_telefono SET DEFAULT nextval('"Telefono_id_telefono_seq"'::regclass);
+
+
+--
+-- TOC entry 2239 (class 2604 OID 35928)
+-- Name: id_tipo_actividad; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tipo_actividad_institucion ALTER COLUMN id_tipo_actividad SET DEFAULT nextval('tipo_actividad_institucion_id_tipo_actividad_seq'::regclass);
+
+
+--
+-- TOC entry 2240 (class 2604 OID 35929)
+-- Name: id_tipo_curso; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tipo_curso ALTER COLUMN id_tipo_curso SET DEFAULT nextval('tipo_curso_id_tipo_curso_seq'::regclass);
+
+
+--
+-- TOC entry 2204 (class 2604 OID 35930)
+-- Name: id_tipo; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tipo_discapacidad ALTER COLUMN id_tipo SET DEFAULT nextval('"Tipo_discapacidad_id_tipo_seq"'::regclass);
+
+
+--
+-- TOC entry 2241 (class 2604 OID 35931)
+-- Name: id_tipo_envio_comunicacion; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tipo_envio_comunicacion ALTER COLUMN id_tipo_envio_comunicacion SET DEFAULT nextval('tipo_envio_comunicacion_id_tipo_envio_comunicacion_seq'::regclass);
+
+
+--
+-- TOC entry 2205 (class 2604 OID 35932)
+-- Name: id_tipo; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tipo_funcionario ALTER COLUMN id_tipo SET DEFAULT nextval('"Tipo_funcionario_id_tipo_seq"'::regclass);
+
+
+--
+-- TOC entry 2242 (class 2604 OID 35933)
+-- Name: id_tipo_incidencia; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tipo_incidencia ALTER COLUMN id_tipo_incidencia SET DEFAULT nextval('tipo_incidencia_id_tipo_incidencia_seq'::regclass);
+
+
+--
+-- TOC entry 2243 (class 2604 OID 35934)
+-- Name: id_tipo_msg_template; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tipo_msg_template ALTER COLUMN id_tipo_msg_template SET DEFAULT nextval('tipo_msg_template_id_tipo_msg_template_seq'::regclass);
+
+
+--
+-- TOC entry 2206 (class 2604 OID 35935)
+-- Name: id_tipo; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tipo_telefono ALTER COLUMN id_tipo SET DEFAULT nextval('"Tipo_telefono_id_tipo_seq"'::regclass);
+
+
+--
+-- TOC entry 2207 (class 2604 OID 35936)
+-- Name: id_tipo; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tipo_usuario ALTER COLUMN id_tipo SET DEFAULT nextval('"Tipo_usuario_id_tipo_seq"'::regclass);
+
+
+--
+-- TOC entry 2208 (class 2604 OID 35937)
+-- Name: id_usuario; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY usuario ALTER COLUMN id_usuario SET DEFAULT nextval('"Usuario_id_usuario_seq"'::regclass);
+
+
+--
+-- TOC entry 2736 (class 0 OID 0)
+-- Dependencies: 170
+-- Name: Operadora_telefono_id_operadora_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('"Operadora_telefono_id_operadora_seq"', 1, false);
+
+
+--
+-- TOC entry 2737 (class 0 OID 0)
+-- Dependencies: 172
+-- Name: Persona_id_persona_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('"Persona_id_persona_seq"', 1, false);
+
+
+--
+-- TOC entry 2738 (class 0 OID 0)
+-- Dependencies: 174
+-- Name: Telefono_id_telefono_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('"Telefono_id_telefono_seq"', 1, false);
+
+
+--
+-- TOC entry 2739 (class 0 OID 0)
+-- Dependencies: 176
+-- Name: Tipo_discapacidad_id_tipo_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('"Tipo_discapacidad_id_tipo_seq"', 1, false);
+
+
+--
+-- TOC entry 2740 (class 0 OID 0)
+-- Dependencies: 178
+-- Name: Tipo_funcionario_id_tipo_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('"Tipo_funcionario_id_tipo_seq"', 1, false);
+
+
+--
+-- TOC entry 2741 (class 0 OID 0)
+-- Dependencies: 180
+-- Name: Tipo_telefono_id_tipo_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('"Tipo_telefono_id_tipo_seq"', 1, false);
+
+
+--
+-- TOC entry 2742 (class 0 OID 0)
+-- Dependencies: 182
+-- Name: Tipo_usuario_id_tipo_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('"Tipo_usuario_id_tipo_seq"', 1, false);
+
+
+--
+-- TOC entry 2743 (class 0 OID 0)
+-- Dependencies: 184
+-- Name: Usuario_id_usuario_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('"Usuario_id_usuario_seq"', 1, false);
+
+
+--
+-- TOC entry 2589 (class 0 OID 35540)
+-- Dependencies: 185
+-- Data for Name: acceso_sistema; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY acceso_sistema (id_persona, correo, usuario, clave) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2590 (class 0 OID 35546)
+-- Dependencies: 186
+-- Data for Name: activacion_servicio; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY activacion_servicio (id_persona, id_periodo, estado) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2591 (class 0 OID 35549)
+-- Dependencies: 187
+-- Data for Name: actividad_institucion; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY actividad_institucion (id_actividad, id_tipo, descripcion, fecha_registro, fecha_inicio, fecha_fin, hora_inicio, hora_fin, estado) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2744 (class 0 OID 0)
+-- Dependencies: 188
+-- Name: actividad_institucion_id_actividad_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('actividad_institucion_id_actividad_seq', 1, false);
+
+
+--
+-- TOC entry 2593 (class 0 OID 35557)
+-- Dependencies: 189
+-- Data for Name: archivos; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY archivos (id_archivo, ruta) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2745 (class 0 OID 0)
+-- Dependencies: 190
+-- Name: archivos_id_archivo_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('archivos_id_archivo_seq', 1, false);
+
+
+--
+-- TOC entry 2595 (class 0 OID 35565)
+-- Dependencies: 191
+-- Data for Name: archivos_tarea; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY archivos_tarea (id_archivos, id_tarea, descripcion) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2596 (class 0 OID 35571)
+-- Dependencies: 192
+-- Data for Name: area_academica; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY area_academica (id_area_academica, descripcion) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2746 (class 0 OID 0)
+-- Dependencies: 193
+-- Name: area_academica_id_area_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('area_academica_id_area_seq', 1, false);
+
+
+--
+-- TOC entry 2598 (class 0 OID 35579)
+-- Dependencies: 194
+-- Data for Name: asignatura; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY asignatura (id_asignatura, id_area_academica, descripcion) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2747 (class 0 OID 0)
+-- Dependencies: 195
+-- Name: asignatura_id_asignatura_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('asignatura_id_asignatura_seq', 1, false);
+
+
+--
+-- TOC entry 2600 (class 0 OID 35587)
+-- Dependencies: 196
+-- Data for Name: bachillerato; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY bachillerato (id_bachillerato, id_especialidad, descripcion) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2748 (class 0 OID 0)
+-- Dependencies: 197
+-- Name: bachillerato_id_bachillerato_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('bachillerato_id_bachillerato_seq', 1, false);
+
+
+--
+-- TOC entry 2602 (class 0 OID 35595)
+-- Dependencies: 198
+-- Data for Name: calificacion; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY calificacion (id_calificacion, id_clase_estudiante, id_sistema_notas, calificacion, fecha_registro, observacion) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2749 (class 0 OID 0)
+-- Dependencies: 199
+-- Name: calificacion_id_calificacion_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('calificacion_id_calificacion_seq', 1, false);
+
+
+--
+-- TOC entry 2604 (class 0 OID 35603)
+-- Dependencies: 200
+-- Data for Name: calificacion_tarea; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY calificacion_tarea (d_calificacion, id_control_tarea) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2605 (class 0 OID 35606)
+-- Dependencies: 201
+-- Data for Name: clase; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY clase (id_clase, id_asignatura, id_funcionario, id_curso) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2606 (class 0 OID 35609)
+-- Dependencies: 202
+-- Data for Name: clase_estudiante; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY clase_estudiante (id_clase_estudiante, id_clase, id_estudiante) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2750 (class 0 OID 0)
+-- Dependencies: 203
+-- Name: clase_estudiante_id_clase_estudiante_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('clase_estudiante_id_clase_estudiante_seq', 1, false);
+
+
+--
+-- TOC entry 2751 (class 0 OID 0)
+-- Dependencies: 204
+-- Name: clase_id_clase_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('clase_id_clase_seq', 1, false);
+
+
+--
+-- TOC entry 2609 (class 0 OID 35616)
+-- Dependencies: 205
+-- Data for Name: comunicacion; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY comunicacion (id_comunicacion, titulo, descripcion, fecha_envio, hora_envio, id_msg_template) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2752 (class 0 OID 0)
+-- Dependencies: 206
+-- Name: comunicacion_id_comunicacion_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('comunicacion_id_comunicacion_seq', 1, false);
+
+
+--
+-- TOC entry 2611 (class 0 OID 35624)
+-- Dependencies: 207
+-- Data for Name: control_comunicacion; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY control_comunicacion (id_control_comunicacion, id_comunicacion, id_emisor, id_receptor, id_tipo) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2753 (class 0 OID 0)
+-- Dependencies: 208
+-- Name: control_comunicaciones_id_control_comunicacion_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('control_comunicaciones_id_control_comunicacion_seq', 1, false);
+
+
+--
+-- TOC entry 2613 (class 0 OID 35629)
+-- Dependencies: 209
+-- Data for Name: control_incidencia; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY control_incidencia (id_control_incidencia, id_incidencia, id_estudiante, id_funcionario) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2754 (class 0 OID 0)
+-- Dependencies: 210
+-- Name: control_incidencia_id_control_incidencia_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('control_incidencia_id_control_incidencia_seq', 1, false);
+
+
+--
+-- TOC entry 2615 (class 0 OID 35634)
+-- Dependencies: 211
+-- Data for Name: control_tarea; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY control_tarea (id_control_tarea, id_tarea, id_clase_estudiante, fecha_revision, observacion, estado) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2755 (class 0 OID 0)
+-- Dependencies: 212
+-- Name: control_tareas_id_control_tarea_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('control_tareas_id_control_tarea_seq', 1, false);
+
+
+--
+-- TOC entry 2617 (class 0 OID 35642)
+-- Dependencies: 213
+-- Data for Name: control_tipo_funcionario; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY control_tipo_funcionario (id_funcionario, id_tipo, estado, fecha_inicio) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2618 (class 0 OID 35645)
+-- Dependencies: 214
+-- Data for Name: curso; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY curso (id_curso, id_grado, id_paralelo, id_periodo, id_tipo_curso) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2619 (class 0 OID 35648)
+-- Dependencies: 215
+-- Data for Name: curso_bachillerato; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY curso_bachillerato (id_curso, id_bachillerato) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2756 (class 0 OID 0)
+-- Dependencies: 216
+-- Name: curso_id_curso_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('curso_id_curso_seq', 1, false);
+
+
+--
+-- TOC entry 2621 (class 0 OID 35653)
+-- Dependencies: 217
+-- Data for Name: detalle_horario_atencion; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY detalle_horario_atencion (id_horario_atencion, id_dia_laboral, hora_ini, hora_fin) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2622 (class 0 OID 35656)
+-- Dependencies: 218
+-- Data for Name: dia_laboral; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY dia_laboral (id_dia_laboral, descripcion) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2757 (class 0 OID 0)
+-- Dependencies: 219
+-- Name: dia_laboral_id_dia_laboral_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('dia_laboral_id_dia_laboral_seq', 1, false);
+
+
+--
+-- TOC entry 2624 (class 0 OID 35664)
+-- Dependencies: 220
+-- Data for Name: discapacidad; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY discapacidad (id_discapacidad, id_tipo, descripcion) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2625 (class 0 OID 35670)
+-- Dependencies: 221
+-- Data for Name: discapacidad_persona; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY discapacidad_persona (id_persona, id_discapacidad, porcentaje) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2626 (class 0 OID 35676)
+-- Dependencies: 222
+-- Data for Name: especialidad; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY especialidad (id_especialidad, descripcion) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2758 (class 0 OID 0)
+-- Dependencies: 223
+-- Name: especialidad_id_especialidad_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('especialidad_id_especialidad_seq', 1, false);
+
+
+--
+-- TOC entry 2628 (class 0 OID 35684)
+-- Dependencies: 224
+-- Data for Name: estado_actividad; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY estado_actividad (id_estado_actividad, descripcion) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2759 (class 0 OID 0)
+-- Dependencies: 225
+-- Name: estado_actividad_id_estado_actividad_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('estado_actividad_id_estado_actividad_seq', 1, false);
+
+
+--
+-- TOC entry 2630 (class 0 OID 35692)
+-- Dependencies: 226
+-- Data for Name: estudiante; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY estudiante (id_estudiante, estado, fecha_ingreso, fecha_salida) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2631 (class 0 OID 35695)
+-- Dependencies: 227
+-- Data for Name: funcionario; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY funcionario (id_funcionario) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2632 (class 0 OID 35698)
+-- Dependencies: 228
+-- Data for Name: grado; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY grado (id_grado, descripcion) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2760 (class 0 OID 0)
+-- Dependencies: 229
+-- Name: grado_id_grado_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('grado_id_grado_seq', 1, false);
+
+
+--
+-- TOC entry 2634 (class 0 OID 35706)
+-- Dependencies: 230
+-- Data for Name: horario_atencion; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY horario_atencion (id_horario_atencion, id_funcionario, estado) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2761 (class 0 OID 0)
+-- Dependencies: 231
+-- Name: horario_atencion_id_horario_atencion_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('horario_atencion_id_horario_atencion_seq', 1, false);
+
+
+--
+-- TOC entry 2636 (class 0 OID 35711)
+-- Dependencies: 232
+-- Data for Name: horario_clase; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY horario_clase (id_clase, id_dia_laboral, hora_ini, hora_fin) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2637 (class 0 OID 35714)
+-- Dependencies: 233
+-- Data for Name: incidencia; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY incidencia (id_incidencia, id_tipo_incidencia, id_prioridad_incidencia, motivo, fecha_evento, hora_evento, fecha_registro, hora_registro) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2762 (class 0 OID 0)
+-- Dependencies: 234
+-- Name: incidencia_id_incidencia_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('incidencia_id_incidencia_seq', 1, false);
+
+
+--
+-- TOC entry 2639 (class 0 OID 35722)
+-- Dependencies: 235
+-- Data for Name: justificacion; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY justificacion (id_justificacion, id_representante, fecha_registro, observacion) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2640 (class 0 OID 35728)
+-- Dependencies: 236
+-- Data for Name: justificacion_archivos; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY justificacion_archivos (id_justificacion, id_archivo, descripcion) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2641 (class 0 OID 35734)
+-- Dependencies: 237
+-- Data for Name: justificacion_asistencia; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY justificacion_asistencia (id_justificacion, id_registro_asistencia) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2763 (class 0 OID 0)
+-- Dependencies: 238
+-- Name: justificacion_id_justificacion_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('justificacion_id_justificacion_seq', 1, false);
+
+
+--
+-- TOC entry 2643 (class 0 OID 35739)
+-- Dependencies: 239
+-- Data for Name: justificacion_incidencia; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY justificacion_incidencia (id_justificacion, id_control_incidencia) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2644 (class 0 OID 35742)
+-- Dependencies: 240
+-- Data for Name: justificacion_tarea; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY justificacion_tarea (id_justificacion, id_control_tarea) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2645 (class 0 OID 35745)
+-- Dependencies: 241
+-- Data for Name: msg_template; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY msg_template (id_msg_template, id_tipo_msg_template, descripcion) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2764 (class 0 OID 0)
+-- Dependencies: 242
+-- Name: msg_template_id_msg_template_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('msg_template_id_msg_template_seq', 1, false);
+
+
+--
+-- TOC entry 2573 (class 0 OID 35488)
+-- Dependencies: 169
+-- Data for Name: operadora_telefono; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY operadora_telefono (id_operadora, descripcion, estado) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2647 (class 0 OID 35753)
+-- Dependencies: 243
+-- Data for Name: pago_pensiones; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY pago_pensiones (id_periodo, id_estudiante, fecha_limite, fecha_pago, valor, descuento, total_pagado, estado) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2648 (class 0 OID 35756)
+-- Dependencies: 244
+-- Data for Name: paralelo; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY paralelo (id_paralelo, descripcion) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2765 (class 0 OID 0)
+-- Dependencies: 245
+-- Name: paralelo_id_paralelo_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('paralelo_id_paralelo_seq', 1, false);
+
+
+--
+-- TOC entry 2650 (class 0 OID 35764)
+-- Dependencies: 246
+-- Data for Name: periodo; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY periodo (id_periodo, fecha_inicio, fecha_fin, descripcion, estado) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2766 (class 0 OID 0)
+-- Dependencies: 247
+-- Name: periodo_id_periodo_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('periodo_id_periodo_seq', 1, false);
+
+
+--
+-- TOC entry 2575 (class 0 OID 35496)
+-- Dependencies: 171
+-- Data for Name: persona; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY persona (id_persona, nombre_a, nombre_b, apellido_a, apellido_b, direccion, provincia, ciudad, fecha_nac, fecha_registro) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2652 (class 0 OID 35772)
+-- Dependencies: 248
+-- Data for Name: prioridad_incidencia; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY prioridad_incidencia (id_prioridad_incidencia, descripcion) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2767 (class 0 OID 0)
+-- Dependencies: 249
+-- Name: prioridad_incidencia_id_prioridad_incidencia_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('prioridad_incidencia_id_prioridad_incidencia_seq', 1, false);
+
+
+--
+-- TOC entry 2654 (class 0 OID 35780)
+-- Dependencies: 250
+-- Data for Name: registro_asistencia; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY registro_asistencia (id_registro_asistencia, id_clase_estudiante, id_dia_laboral, fecha_clase, hora_ingreso, hora_salida, observacion, estado) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2768 (class 0 OID 0)
+-- Dependencies: 251
+-- Name: registro_asistencia_id_registro_asistencia_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('registro_asistencia_id_registro_asistencia_seq', 1, false);
+
+
+--
+-- TOC entry 2656 (class 0 OID 35788)
+-- Dependencies: 252
+-- Data for Name: representacion; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY representacion (id_representante, id_estudiante) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2657 (class 0 OID 35791)
+-- Dependencies: 253
+-- Data for Name: representante; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY representante (id_representante, actividad_laboral, estado) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2658 (class 0 OID 35797)
+-- Dependencies: 254
+-- Data for Name: seguimiento_actividad; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY seguimiento_actividad (id_seguimiento, id_usuario, id_estado_actividad, fecha, hora, observacion) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2769 (class 0 OID 0)
+-- Dependencies: 255
+-- Name: seguimiento_actividad_id_seguimiento_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('seguimiento_actividad_id_seguimiento_seq', 1, false);
+
+
+--
+-- TOC entry 2660 (class 0 OID 35805)
+-- Dependencies: 256
+-- Data for Name: seguimiento_cita; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY seguimiento_cita (id_cita, id_seguimiento) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2661 (class 0 OID 35808)
+-- Dependencies: 257
+-- Data for Name: seguimiento_comunicacion; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY seguimiento_comunicacion (id_control_comunicacion, id_seguimiento) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2662 (class 0 OID 35811)
+-- Dependencies: 258
+-- Data for Name: seguimiento_incidencia; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY seguimiento_incidencia (id_control_incidencia, id_seguimiento) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2663 (class 0 OID 35814)
+-- Dependencies: 259
+-- Data for Name: seguimiento_justificacion; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY seguimiento_justificacion (id_justificacion, id_seguimiento) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2664 (class 0 OID 35817)
+-- Dependencies: 260
+-- Data for Name: seguimiento_tarea; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY seguimiento_tarea (id_control_tarea, id_seguimiento) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2665 (class 0 OID 35820)
+-- Dependencies: 261
+-- Data for Name: sistema_calificaciones; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY sistema_calificaciones (id_sistema_calificaciones, descripcion, estructura_anual, sub_estructura_anual) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2770 (class 0 OID 0)
+-- Dependencies: 262
+-- Name: sistema_calificaciones_id_sistema_calificaciones_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('sistema_calificaciones_id_sistema_calificaciones_seq', 1, false);
+
+
+--
+-- TOC entry 2667 (class 0 OID 35828)
+-- Dependencies: 263
+-- Data for Name: sistema_notas; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY sistema_notas (id_sistema_notas, id_sistema_calificaciones, descripcion, rango_min, rango_max, estructura_anual, sub_estructura_anual) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2771 (class 0 OID 0)
+-- Dependencies: 264
+-- Name: sistema_notas_id_sistema_notas_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('sistema_notas_id_sistema_notas_seq', 1, false);
+
+
+--
+-- TOC entry 2669 (class 0 OID 35836)
+-- Dependencies: 265
+-- Data for Name: solicitud_cita; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY solicitud_cita (id_cita, id_remitente, id_funcionario, id_representante, descripcion, fecha_cita, hora_ini, hora_fin) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2772 (class 0 OID 0)
+-- Dependencies: 266
+-- Name: solicitud_cita_id_cita_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('solicitud_cita_id_cita_seq', 1, false);
+
+
+--
+-- TOC entry 2671 (class 0 OID 35844)
+-- Dependencies: 267
+-- Data for Name: tarea; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY tarea (id_tarea, titulo, descripcion, fecha_registro, fecha_entrega) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2773 (class 0 OID 0)
+-- Dependencies: 268
+-- Name: tarea_id_tarea_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('tarea_id_tarea_seq', 1, false);
+
+
+--
+-- TOC entry 2577 (class 0 OID 35504)
+-- Dependencies: 173
+-- Data for Name: telefono; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY telefono (id_telefono, id_tipo, id_operadora, numero, pais) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2673 (class 0 OID 35852)
+-- Dependencies: 269
+-- Data for Name: telefono_persona; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY telefono_persona (id_persona, id_telefono) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2674 (class 0 OID 35855)
+-- Dependencies: 270
+-- Data for Name: tipo_actividad_institucion; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY tipo_actividad_institucion (id_tipo_actividad, descripcion) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2774 (class 0 OID 0)
+-- Dependencies: 271
+-- Name: tipo_actividad_institucion_id_tipo_actividad_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('tipo_actividad_institucion_id_tipo_actividad_seq', 1, false);
+
+
+--
+-- TOC entry 2676 (class 0 OID 35863)
+-- Dependencies: 272
+-- Data for Name: tipo_curso; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY tipo_curso (id_tipo_curso, descripcion) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2775 (class 0 OID 0)
+-- Dependencies: 273
+-- Name: tipo_curso_id_tipo_curso_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('tipo_curso_id_tipo_curso_seq', 1, false);
+
+
+--
+-- TOC entry 2579 (class 0 OID 35512)
+-- Dependencies: 175
+-- Data for Name: tipo_discapacidad; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY tipo_discapacidad (id_tipo, descripcion) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2678 (class 0 OID 35871)
+-- Dependencies: 274
+-- Data for Name: tipo_envio_comunicacion; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY tipo_envio_comunicacion (id_tipo_envio_comunicacion, descripcion) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2776 (class 0 OID 0)
+-- Dependencies: 275
+-- Name: tipo_envio_comunicacion_id_tipo_envio_comunicacion_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('tipo_envio_comunicacion_id_tipo_envio_comunicacion_seq', 1, false);
+
+
+--
+-- TOC entry 2581 (class 0 OID 35517)
+-- Dependencies: 177
+-- Data for Name: tipo_funcionario; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY tipo_funcionario (id_tipo, descripcion) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2680 (class 0 OID 35879)
+-- Dependencies: 276
+-- Data for Name: tipo_incidencia; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY tipo_incidencia (id_tipo_incidencia, descripcion) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2777 (class 0 OID 0)
+-- Dependencies: 277
+-- Name: tipo_incidencia_id_tipo_incidencia_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('tipo_incidencia_id_tipo_incidencia_seq', 1, false);
+
+
+--
+-- TOC entry 2682 (class 0 OID 35887)
+-- Dependencies: 278
+-- Data for Name: tipo_msg_template; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY tipo_msg_template (id_tipo_msg_template, descripcion) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2778 (class 0 OID 0)
+-- Dependencies: 279
+-- Name: tipo_msg_template_id_tipo_msg_template_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('tipo_msg_template_id_tipo_msg_template_seq', 1, false);
+
+
+--
+-- TOC entry 2583 (class 0 OID 35522)
+-- Dependencies: 179
+-- Data for Name: tipo_telefono; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY tipo_telefono (id_tipo, descripcion) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2585 (class 0 OID 35527)
+-- Dependencies: 181
+-- Data for Name: tipo_usuario; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY tipo_usuario (id_tipo, descripcion) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2587 (class 0 OID 35535)
+-- Dependencies: 183
+-- Data for Name: usuario; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY usuario (id_usuario, id_persona, id_tipo_usuario, estado) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2313 (class 2606 OID 35939)
+-- Name: fk_estudiante; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY estudiante
+    ADD CONSTRAINT fk_estudiante PRIMARY KEY (id_estudiante);
+
+
+--
+-- TOC entry 2323 (class 2606 OID 35941)
+-- Name: pk__incidencia; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY incidencia
+    ADD CONSTRAINT pk__incidencia PRIMARY KEY (id_incidencia);
+
+
+--
+-- TOC entry 2263 (class 2606 OID 35943)
+-- Name: pk_acceso_sistema; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY acceso_sistema
+    ADD CONSTRAINT pk_acceso_sistema PRIMARY KEY (id_persona);
+
+
+--
+-- TOC entry 2265 (class 2606 OID 35945)
+-- Name: pk_activacion; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY activacion_servicio
+    ADD CONSTRAINT pk_activacion PRIMARY KEY (id_persona, id_periodo);
+
+
+--
+-- TOC entry 2267 (class 2606 OID 35947)
+-- Name: pk_actividad; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY actividad_institucion
+    ADD CONSTRAINT pk_actividad PRIMARY KEY (id_actividad);
+
+
+--
+-- TOC entry 2269 (class 2606 OID 35949)
+-- Name: pk_archivo; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY archivos
+    ADD CONSTRAINT pk_archivo PRIMARY KEY (id_archivo);
+
+
+--
+-- TOC entry 2271 (class 2606 OID 35951)
+-- Name: pk_archivo_tareas; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY archivos_tarea
+    ADD CONSTRAINT pk_archivo_tareas PRIMARY KEY (id_archivos, id_tarea);
+
+
+--
+-- TOC entry 2273 (class 2606 OID 35953)
+-- Name: pk_area_academica; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY area_academica
+    ADD CONSTRAINT pk_area_academica PRIMARY KEY (id_area_academica);
+
+
+--
+-- TOC entry 2277 (class 2606 OID 35955)
+-- Name: pk_bachillerato; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY bachillerato
+    ADD CONSTRAINT pk_bachillerato PRIMARY KEY (id_bachillerato);
+
+
+--
+-- TOC entry 2279 (class 2606 OID 35957)
+-- Name: pk_calificacion; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY calificacion
+    ADD CONSTRAINT pk_calificacion PRIMARY KEY (id_calificacion);
+
+
+--
+-- TOC entry 2281 (class 2606 OID 35959)
+-- Name: pk_calificacion_tarea; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY calificacion_tarea
+    ADD CONSTRAINT pk_calificacion_tarea PRIMARY KEY (d_calificacion, id_control_tarea);
+
+
+--
+-- TOC entry 2367 (class 2606 OID 35961)
+-- Name: pk_cita; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY solicitud_cita
+    ADD CONSTRAINT pk_cita PRIMARY KEY (id_cita);
+
+
+--
+-- TOC entry 2283 (class 2606 OID 35963)
+-- Name: pk_clase; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY clase
+    ADD CONSTRAINT pk_clase PRIMARY KEY (id_clase);
+
+
+--
+-- TOC entry 2285 (class 2606 OID 35965)
+-- Name: pk_clase_estudiante; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY clase_estudiante
+    ADD CONSTRAINT pk_clase_estudiante PRIMARY KEY (id_clase_estudiante);
+
+
+--
+-- TOC entry 2287 (class 2606 OID 35967)
+-- Name: pk_comunicacion; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY comunicacion
+    ADD CONSTRAINT pk_comunicacion PRIMARY KEY (id_comunicacion);
+
+
+--
+-- TOC entry 2289 (class 2606 OID 35969)
+-- Name: pk_control_comunicacion; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY control_comunicacion
+    ADD CONSTRAINT pk_control_comunicacion PRIMARY KEY (id_control_comunicacion);
+
+
+--
+-- TOC entry 2291 (class 2606 OID 35971)
+-- Name: pk_control_incidencia; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY control_incidencia
+    ADD CONSTRAINT pk_control_incidencia PRIMARY KEY (id_control_incidencia);
+
+
+--
+-- TOC entry 2293 (class 2606 OID 35973)
+-- Name: pk_control_tarea; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY control_tarea
+    ADD CONSTRAINT pk_control_tarea PRIMARY KEY (id_control_tarea);
+
+
+--
+-- TOC entry 2295 (class 2606 OID 35975)
+-- Name: pk_control_tipo_funcionario; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY control_tipo_funcionario
+    ADD CONSTRAINT pk_control_tipo_funcionario PRIMARY KEY (id_funcionario, id_tipo);
+
+
+--
+-- TOC entry 2297 (class 2606 OID 35977)
+-- Name: pk_curso; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY curso
+    ADD CONSTRAINT pk_curso PRIMARY KEY (id_curso);
+
+
+--
+-- TOC entry 2299 (class 2606 OID 35979)
+-- Name: pk_curso_bachillerato; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY curso_bachillerato
+    ADD CONSTRAINT pk_curso_bachillerato PRIMARY KEY (id_curso, id_bachillerato);
+
+
+--
+-- TOC entry 2301 (class 2606 OID 35981)
+-- Name: pk_detalle_horario; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY detalle_horario_atencion
+    ADD CONSTRAINT pk_detalle_horario PRIMARY KEY (id_horario_atencion, id_dia_laboral);
+
+
+--
+-- TOC entry 2303 (class 2606 OID 35983)
+-- Name: pk_dia_laboral; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY dia_laboral
+    ADD CONSTRAINT pk_dia_laboral PRIMARY KEY (id_dia_laboral);
+
+
+--
+-- TOC entry 2305 (class 2606 OID 35985)
+-- Name: pk_discapacidad; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY discapacidad
+    ADD CONSTRAINT pk_discapacidad PRIMARY KEY (id_discapacidad);
+
+
+--
+-- TOC entry 2307 (class 2606 OID 35987)
+-- Name: pk_discapacidad_persona; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY discapacidad_persona
+    ADD CONSTRAINT pk_discapacidad_persona PRIMARY KEY (id_persona, id_discapacidad);
+
+
+--
+-- TOC entry 2309 (class 2606 OID 35989)
+-- Name: pk_especialidad; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY especialidad
+    ADD CONSTRAINT pk_especialidad PRIMARY KEY (id_especialidad);
+
+
+--
+-- TOC entry 2311 (class 2606 OID 35991)
+-- Name: pk_estado_actividad; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY estado_actividad
+    ADD CONSTRAINT pk_estado_actividad PRIMARY KEY (id_estado_actividad);
+
+
+--
+-- TOC entry 2315 (class 2606 OID 35993)
+-- Name: pk_funcionario; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY funcionario
+    ADD CONSTRAINT pk_funcionario PRIMARY KEY (id_funcionario);
+
+
+--
+-- TOC entry 2317 (class 2606 OID 35995)
+-- Name: pk_grado; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY grado
+    ADD CONSTRAINT pk_grado PRIMARY KEY (id_grado);
+
+
+--
+-- TOC entry 2319 (class 2606 OID 35997)
+-- Name: pk_horario_atencion; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY horario_atencion
+    ADD CONSTRAINT pk_horario_atencion PRIMARY KEY (id_horario_atencion);
+
+
+--
+-- TOC entry 2321 (class 2606 OID 35999)
+-- Name: pk_horario_clase; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY horario_clase
+    ADD CONSTRAINT pk_horario_clase PRIMARY KEY (id_clase, id_dia_laboral);
+
+
+--
+-- TOC entry 2379 (class 2606 OID 36001)
+-- Name: pk_incidencia; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY tipo_incidencia
+    ADD CONSTRAINT pk_incidencia PRIMARY KEY (id_tipo_incidencia);
+
+
+--
+-- TOC entry 2325 (class 2606 OID 36003)
+-- Name: pk_justificacion; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY justificacion
+    ADD CONSTRAINT pk_justificacion PRIMARY KEY (id_justificacion);
+
+
+--
+-- TOC entry 2327 (class 2606 OID 36005)
+-- Name: pk_justificacion_archivo; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY justificacion_archivos
+    ADD CONSTRAINT pk_justificacion_archivo PRIMARY KEY (id_justificacion, id_archivo);
+
+
+--
+-- TOC entry 2329 (class 2606 OID 36007)
+-- Name: pk_justificacion_asistencia; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY justificacion_asistencia
+    ADD CONSTRAINT pk_justificacion_asistencia PRIMARY KEY (id_justificacion, id_registro_asistencia);
+
+
+--
+-- TOC entry 2331 (class 2606 OID 36009)
+-- Name: pk_justificacion_incidencia; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY justificacion_incidencia
+    ADD CONSTRAINT pk_justificacion_incidencia PRIMARY KEY (id_justificacion, id_control_incidencia);
+
+
+--
+-- TOC entry 2333 (class 2606 OID 36011)
+-- Name: pk_jutificacion_tarea; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY justificacion_tarea
+    ADD CONSTRAINT pk_jutificacion_tarea PRIMARY KEY (id_justificacion, id_control_tarea);
+
+
+--
+-- TOC entry 2335 (class 2606 OID 36013)
+-- Name: pk_msg_template; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY msg_template
+    ADD CONSTRAINT pk_msg_template PRIMARY KEY (id_msg_template);
+
+
+--
+-- TOC entry 2245 (class 2606 OID 36015)
+-- Name: pk_operadora_telefono; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY operadora_telefono
+    ADD CONSTRAINT pk_operadora_telefono PRIMARY KEY (id_operadora);
+
+
+--
+-- TOC entry 2337 (class 2606 OID 36017)
+-- Name: pk_pago_pensiones; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY pago_pensiones
+    ADD CONSTRAINT pk_pago_pensiones PRIMARY KEY (id_periodo, id_estudiante);
+
+
+--
+-- TOC entry 2339 (class 2606 OID 36019)
+-- Name: pk_paralelo; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY paralelo
+    ADD CONSTRAINT pk_paralelo PRIMARY KEY (id_paralelo);
+
+
+--
+-- TOC entry 2341 (class 2606 OID 36021)
+-- Name: pk_periodo; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY periodo
+    ADD CONSTRAINT pk_periodo PRIMARY KEY (id_periodo);
+
+
+--
+-- TOC entry 2247 (class 2606 OID 36023)
+-- Name: pk_persona; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY persona
+    ADD CONSTRAINT pk_persona PRIMARY KEY (id_persona);
+
+
+--
+-- TOC entry 2343 (class 2606 OID 36025)
+-- Name: pk_prioridad; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY prioridad_incidencia
+    ADD CONSTRAINT pk_prioridad PRIMARY KEY (id_prioridad_incidencia);
+
+
+--
+-- TOC entry 2345 (class 2606 OID 36027)
+-- Name: pk_registro_asistencia; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY registro_asistencia
+    ADD CONSTRAINT pk_registro_asistencia PRIMARY KEY (id_registro_asistencia);
+
+
+--
+-- TOC entry 2347 (class 2606 OID 36029)
+-- Name: pk_representacion; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY representacion
+    ADD CONSTRAINT pk_representacion PRIMARY KEY (id_representante, id_estudiante);
+
+
+--
+-- TOC entry 2349 (class 2606 OID 36031)
+-- Name: pk_representante; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY representante
+    ADD CONSTRAINT pk_representante PRIMARY KEY (id_representante);
+
+
+--
+-- TOC entry 2351 (class 2606 OID 36033)
+-- Name: pk_seguimiento_actividad; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY seguimiento_actividad
+    ADD CONSTRAINT pk_seguimiento_actividad PRIMARY KEY (id_seguimiento);
+
+
+--
+-- TOC entry 2353 (class 2606 OID 36035)
+-- Name: pk_seguimiento_cita; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY seguimiento_cita
+    ADD CONSTRAINT pk_seguimiento_cita PRIMARY KEY (id_cita, id_seguimiento);
+
+
+--
+-- TOC entry 2355 (class 2606 OID 36037)
+-- Name: pk_seguimiento_comunicacion; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY seguimiento_comunicacion
+    ADD CONSTRAINT pk_seguimiento_comunicacion PRIMARY KEY (id_seguimiento, id_control_comunicacion);
+
+
+--
+-- TOC entry 2357 (class 2606 OID 36039)
+-- Name: pk_seguimiento_incidencia; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY seguimiento_incidencia
+    ADD CONSTRAINT pk_seguimiento_incidencia PRIMARY KEY (id_control_incidencia, id_seguimiento);
+
+
+--
+-- TOC entry 2359 (class 2606 OID 36041)
+-- Name: pk_seguimiento_justificacion; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY seguimiento_justificacion
+    ADD CONSTRAINT pk_seguimiento_justificacion PRIMARY KEY (id_justificacion, id_seguimiento);
+
+
+--
+-- TOC entry 2361 (class 2606 OID 36043)
+-- Name: pk_seguimiento_tarea; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY seguimiento_tarea
+    ADD CONSTRAINT pk_seguimiento_tarea PRIMARY KEY (id_control_tarea, id_seguimiento);
+
+
+--
+-- TOC entry 2275 (class 2606 OID 36045)
+-- Name: pk_signatura; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY asignatura
+    ADD CONSTRAINT pk_signatura PRIMARY KEY (id_asignatura);
+
+
+--
+-- TOC entry 2363 (class 2606 OID 36047)
+-- Name: pk_sistema_calificaciones; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY sistema_calificaciones
+    ADD CONSTRAINT pk_sistema_calificaciones PRIMARY KEY (id_sistema_calificaciones);
+
+
+--
+-- TOC entry 2365 (class 2606 OID 36049)
+-- Name: pk_sistema_notas; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY sistema_notas
+    ADD CONSTRAINT pk_sistema_notas PRIMARY KEY (id_sistema_notas);
+
+
+--
+-- TOC entry 2369 (class 2606 OID 36051)
+-- Name: pk_tarea; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY tarea
+    ADD CONSTRAINT pk_tarea PRIMARY KEY (id_tarea);
+
+
+--
+-- TOC entry 2249 (class 2606 OID 36053)
+-- Name: pk_telefono; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY telefono
+    ADD CONSTRAINT pk_telefono PRIMARY KEY (id_telefono);
+
+
+--
+-- TOC entry 2371 (class 2606 OID 36055)
+-- Name: pk_telefono_persona; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY telefono_persona
+    ADD CONSTRAINT pk_telefono_persona PRIMARY KEY (id_persona, id_telefono);
+
+
+--
+-- TOC entry 2373 (class 2606 OID 36057)
+-- Name: pk_tipo_actividad; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY tipo_actividad_institucion
+    ADD CONSTRAINT pk_tipo_actividad PRIMARY KEY (id_tipo_actividad);
+
+
+--
+-- TOC entry 2375 (class 2606 OID 36059)
+-- Name: pk_tipo_curso; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY tipo_curso
+    ADD CONSTRAINT pk_tipo_curso PRIMARY KEY (id_tipo_curso);
+
+
+--
+-- TOC entry 2253 (class 2606 OID 36061)
+-- Name: pk_tipo_discapacidad; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY tipo_discapacidad
+    ADD CONSTRAINT pk_tipo_discapacidad PRIMARY KEY (id_tipo);
+
+
+--
+-- TOC entry 2377 (class 2606 OID 36063)
+-- Name: pk_tipo_envio_comunicacion; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY tipo_envio_comunicacion
+    ADD CONSTRAINT pk_tipo_envio_comunicacion PRIMARY KEY (id_tipo_envio_comunicacion);
+
+
+--
+-- TOC entry 2255 (class 2606 OID 36065)
+-- Name: pk_tipo_funcionario; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY tipo_funcionario
+    ADD CONSTRAINT pk_tipo_funcionario PRIMARY KEY (id_tipo);
+
+
+--
+-- TOC entry 2381 (class 2606 OID 36067)
+-- Name: pk_tipo_msg_template; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY tipo_msg_template
+    ADD CONSTRAINT pk_tipo_msg_template PRIMARY KEY (id_tipo_msg_template);
+
+
+--
+-- TOC entry 2257 (class 2606 OID 36069)
+-- Name: pk_tipo_telefono; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY tipo_telefono
+    ADD CONSTRAINT pk_tipo_telefono PRIMARY KEY (id_tipo);
+
+
+--
+-- TOC entry 2259 (class 2606 OID 36071)
+-- Name: pk_tipo_usuario; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY tipo_usuario
+    ADD CONSTRAINT pk_tipo_usuario PRIMARY KEY (id_tipo);
+
+
+--
+-- TOC entry 2261 (class 2606 OID 36073)
+-- Name: pk_usuario; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY usuario
+    ADD CONSTRAINT pk_usuario PRIMARY KEY (id_usuario);
+
+
+--
+-- TOC entry 2251 (class 2606 OID 36075)
+-- Name: unq_telefono; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY telefono
+    ADD CONSTRAINT unq_telefono UNIQUE (numero);
+
+
+--
+-- TOC entry 2390 (class 2606 OID 36076)
+-- Name: fk_archivo; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY archivos_tarea
+    ADD CONSTRAINT fk_archivo FOREIGN KEY (id_archivos) REFERENCES archivos(id_archivo);
+
+
+--
+-- TOC entry 2433 (class 2606 OID 36081)
+-- Name: fk_archivo; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY justificacion_archivos
+    ADD CONSTRAINT fk_archivo FOREIGN KEY (id_archivo) REFERENCES archivos(id_archivo);
+
+
+--
+-- TOC entry 2392 (class 2606 OID 36086)
+-- Name: fk_area_academica; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY asignatura
+    ADD CONSTRAINT fk_area_academica FOREIGN KEY (id_area_academica) REFERENCES area_academica(id_area_academica);
+
+
+--
+-- TOC entry 2398 (class 2606 OID 36091)
+-- Name: fk_asignatura; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY clase
+    ADD CONSTRAINT fk_asignatura FOREIGN KEY (id_asignatura) REFERENCES asignatura(id_asignatura);
+
+
+--
+-- TOC entry 2435 (class 2606 OID 36096)
+-- Name: fk_asistencia; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY justificacion_asistencia
+    ADD CONSTRAINT fk_asistencia FOREIGN KEY (id_registro_asistencia) REFERENCES registro_asistencia(id_registro_asistencia);
+
+
+--
+-- TOC entry 2419 (class 2606 OID 36101)
+-- Name: fk_bachillerato; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY curso_bachillerato
+    ADD CONSTRAINT fk_bachillerato FOREIGN KEY (id_bachillerato) REFERENCES bachillerato(id_bachillerato);
+
+
+--
+-- TOC entry 2396 (class 2606 OID 36106)
+-- Name: fk_calificacion; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY calificacion_tarea
+    ADD CONSTRAINT fk_calificacion FOREIGN KEY (d_calificacion) REFERENCES calificacion(id_calificacion);
+
+
+--
+-- TOC entry 2451 (class 2606 OID 36111)
+-- Name: fk_cita; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY seguimiento_cita
+    ADD CONSTRAINT fk_cita FOREIGN KEY (id_cita) REFERENCES solicitud_cita(id_cita);
+
+
+--
+-- TOC entry 2401 (class 2606 OID 36116)
+-- Name: fk_clase; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY clase_estudiante
+    ADD CONSTRAINT fk_clase FOREIGN KEY (id_clase) REFERENCES clase(id_clase);
+
+
+--
+-- TOC entry 2428 (class 2606 OID 36121)
+-- Name: fk_clase; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY horario_clase
+    ADD CONSTRAINT fk_clase FOREIGN KEY (id_clase) REFERENCES clase(id_clase);
+
+
+--
+-- TOC entry 2411 (class 2606 OID 36126)
+-- Name: fk_clase_estudiante; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY control_tarea
+    ADD CONSTRAINT fk_clase_estudiante FOREIGN KEY (id_clase_estudiante) REFERENCES clase_estudiante(id_clase_estudiante);
+
+
+--
+-- TOC entry 2444 (class 2606 OID 36131)
+-- Name: fk_clase_estudiante; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY registro_asistencia
+    ADD CONSTRAINT fk_clase_estudiante FOREIGN KEY (id_clase_estudiante) REFERENCES clase_estudiante(id_clase_estudiante);
+
+
+--
+-- TOC entry 2394 (class 2606 OID 36136)
+-- Name: fk_clase_estudiante; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY calificacion
+    ADD CONSTRAINT fk_clase_estudiante FOREIGN KEY (id_clase_estudiante) REFERENCES clase_estudiante(id_clase_estudiante);
+
+
+--
+-- TOC entry 2404 (class 2606 OID 36141)
+-- Name: fk_comunicacion; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY control_comunicacion
+    ADD CONSTRAINT fk_comunicacion FOREIGN KEY (id_comunicacion) REFERENCES comunicacion(id_comunicacion);
+
+
+--
+-- TOC entry 2453 (class 2606 OID 36146)
+-- Name: fk_comunicacion; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY seguimiento_comunicacion
+    ADD CONSTRAINT fk_comunicacion FOREIGN KEY (id_control_comunicacion) REFERENCES control_comunicacion(id_control_comunicacion);
+
+
+--
+-- TOC entry 2459 (class 2606 OID 36151)
+-- Name: fk_control_tarea; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY seguimiento_tarea
+    ADD CONSTRAINT fk_control_tarea FOREIGN KEY (id_control_tarea) REFERENCES control_tarea(id_control_tarea);
+
+
+--
+-- TOC entry 2399 (class 2606 OID 36156)
+-- Name: fk_curso; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY clase
+    ADD CONSTRAINT fk_curso FOREIGN KEY (id_curso) REFERENCES curso(id_curso);
+
+
+--
+-- TOC entry 2420 (class 2606 OID 36161)
+-- Name: fk_curso; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY curso_bachillerato
+    ADD CONSTRAINT fk_curso FOREIGN KEY (id_curso) REFERENCES curso(id_curso);
+
+
+--
+-- TOC entry 2429 (class 2606 OID 36166)
+-- Name: fk_dia_laboral; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY horario_clase
+    ADD CONSTRAINT fk_dia_laboral FOREIGN KEY (id_dia_laboral) REFERENCES dia_laboral(id_dia_laboral);
+
+
+--
+-- TOC entry 2445 (class 2606 OID 36171)
+-- Name: fk_dia_laboral; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY registro_asistencia
+    ADD CONSTRAINT fk_dia_laboral FOREIGN KEY (id_dia_laboral) REFERENCES dia_laboral(id_dia_laboral);
+
+
+--
+-- TOC entry 2423 (class 2606 OID 36176)
+-- Name: fk_discapacidad; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY discapacidad_persona
+    ADD CONSTRAINT fk_discapacidad FOREIGN KEY (id_discapacidad) REFERENCES discapacidad(id_discapacidad);
+
+
+--
+-- TOC entry 2405 (class 2606 OID 36181)
+-- Name: fk_emisor; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY control_comunicacion
+    ADD CONSTRAINT fk_emisor FOREIGN KEY (id_emisor) REFERENCES usuario(id_usuario);
+
+
+--
+-- TOC entry 2393 (class 2606 OID 36186)
+-- Name: fk_especialidad; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY bachillerato
+    ADD CONSTRAINT fk_especialidad FOREIGN KEY (id_especialidad) REFERENCES especialidad(id_especialidad);
+
+
+--
+-- TOC entry 2449 (class 2606 OID 36191)
+-- Name: fk_estado_actividad; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY seguimiento_actividad
+    ADD CONSTRAINT fk_estado_actividad FOREIGN KEY (id_estado_actividad) REFERENCES estado_actividad(id_estado_actividad);
+
+
+--
+-- TOC entry 2446 (class 2606 OID 36196)
+-- Name: fk_estudiante; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY representacion
+    ADD CONSTRAINT fk_estudiante FOREIGN KEY (id_estudiante) REFERENCES estudiante(id_estudiante);
+
+
+--
+-- TOC entry 2402 (class 2606 OID 36201)
+-- Name: fk_estudiante; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY clase_estudiante
+    ADD CONSTRAINT fk_estudiante FOREIGN KEY (id_estudiante) REFERENCES estudiante(id_estudiante);
+
+
+--
+-- TOC entry 2408 (class 2606 OID 36206)
+-- Name: fk_estudiante; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY control_incidencia
+    ADD CONSTRAINT fk_estudiante FOREIGN KEY (id_estudiante) REFERENCES estudiante(id_estudiante);
+
+
+--
+-- TOC entry 2442 (class 2606 OID 36211)
+-- Name: fk_estudiante; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY pago_pensiones
+    ADD CONSTRAINT fk_estudiante FOREIGN KEY (id_estudiante) REFERENCES estudiante(id_estudiante);
+
+
+--
+-- TOC entry 2413 (class 2606 OID 36216)
+-- Name: fk_funcionario; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY control_tipo_funcionario
+    ADD CONSTRAINT fk_funcionario FOREIGN KEY (id_funcionario) REFERENCES funcionario(id_funcionario);
+
+
+--
+-- TOC entry 2462 (class 2606 OID 36221)
+-- Name: fk_funcionario; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY solicitud_cita
+    ADD CONSTRAINT fk_funcionario FOREIGN KEY (id_funcionario) REFERENCES funcionario(id_funcionario);
+
+
+--
+-- TOC entry 2427 (class 2606 OID 36226)
+-- Name: fk_funcionario; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY horario_atencion
+    ADD CONSTRAINT fk_funcionario FOREIGN KEY (id_funcionario) REFERENCES funcionario(id_funcionario);
+
+
+--
+-- TOC entry 2400 (class 2606 OID 36231)
+-- Name: fk_funcionario; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY clase
+    ADD CONSTRAINT fk_funcionario FOREIGN KEY (id_funcionario) REFERENCES funcionario(id_funcionario);
+
+
+--
+-- TOC entry 2409 (class 2606 OID 36236)
+-- Name: fk_funcionario; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY control_incidencia
+    ADD CONSTRAINT fk_funcionario FOREIGN KEY (id_funcionario) REFERENCES funcionario(id_funcionario);
+
+
+--
+-- TOC entry 2415 (class 2606 OID 36241)
+-- Name: fk_grado; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY curso
+    ADD CONSTRAINT fk_grado FOREIGN KEY (id_grado) REFERENCES grado(id_grado);
+
+
+--
+-- TOC entry 2421 (class 2606 OID 36246)
+-- Name: fk_horario_atencion; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY detalle_horario_atencion
+    ADD CONSTRAINT fk_horario_atencion FOREIGN KEY (id_horario_atencion) REFERENCES horario_atencion(id_horario_atencion);
+
+
+--
+-- TOC entry 2410 (class 2606 OID 36251)
+-- Name: fk_incidencia; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY control_incidencia
+    ADD CONSTRAINT fk_incidencia FOREIGN KEY (id_incidencia) REFERENCES incidencia(id_incidencia);
+
+
+--
+-- TOC entry 2437 (class 2606 OID 36256)
+-- Name: fk_incidencia; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY justificacion_incidencia
+    ADD CONSTRAINT fk_incidencia FOREIGN KEY (id_control_incidencia) REFERENCES control_incidencia(id_control_incidencia);
+
+
+--
+-- TOC entry 2455 (class 2606 OID 36261)
+-- Name: fk_incidencia; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY seguimiento_incidencia
+    ADD CONSTRAINT fk_incidencia FOREIGN KEY (id_control_incidencia) REFERENCES control_incidencia(id_control_incidencia);
+
+
+--
+-- TOC entry 2434 (class 2606 OID 36266)
+-- Name: fk_justificacion; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY justificacion_archivos
+    ADD CONSTRAINT fk_justificacion FOREIGN KEY (id_justificacion) REFERENCES justificacion(id_justificacion);
+
+
+--
+-- TOC entry 2436 (class 2606 OID 36271)
+-- Name: fk_justificacion; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY justificacion_asistencia
+    ADD CONSTRAINT fk_justificacion FOREIGN KEY (id_justificacion) REFERENCES justificacion(id_justificacion);
+
+
+--
+-- TOC entry 2439 (class 2606 OID 36276)
+-- Name: fk_justificacion; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY justificacion_tarea
+    ADD CONSTRAINT fk_justificacion FOREIGN KEY (id_justificacion) REFERENCES justificacion(id_justificacion);
+
+
+--
+-- TOC entry 2438 (class 2606 OID 36281)
+-- Name: fk_justificacion; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY justificacion_incidencia
+    ADD CONSTRAINT fk_justificacion FOREIGN KEY (id_justificacion) REFERENCES justificacion(id_justificacion);
+
+
+--
+-- TOC entry 2457 (class 2606 OID 36286)
+-- Name: fk_justificacion; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY seguimiento_justificacion
+    ADD CONSTRAINT fk_justificacion FOREIGN KEY (id_justificacion) REFERENCES justificacion(id_justificacion);
+
+
+--
+-- TOC entry 2403 (class 2606 OID 36291)
+-- Name: fk_msg_template; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY comunicacion
+    ADD CONSTRAINT fk_msg_template FOREIGN KEY (id_msg_template) REFERENCES tipo_msg_template(id_tipo_msg_template);
+
+
+--
+-- TOC entry 2382 (class 2606 OID 36296)
+-- Name: fk_operadora; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY telefono
+    ADD CONSTRAINT fk_operadora FOREIGN KEY (id_operadora) REFERENCES operadora_telefono(id_operadora);
+
+
+--
+-- TOC entry 2416 (class 2606 OID 36301)
+-- Name: fk_paralelo; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY curso
+    ADD CONSTRAINT fk_paralelo FOREIGN KEY (id_paralelo) REFERENCES paralelo(id_paralelo);
+
+
+--
+-- TOC entry 2387 (class 2606 OID 36306)
+-- Name: fk_periodo; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY activacion_servicio
+    ADD CONSTRAINT fk_periodo FOREIGN KEY (id_periodo) REFERENCES periodo(id_periodo);
+
+
+--
+-- TOC entry 2417 (class 2606 OID 36311)
+-- Name: fk_periodo; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY curso
+    ADD CONSTRAINT fk_periodo FOREIGN KEY (id_periodo) REFERENCES periodo(id_periodo);
+
+
+--
+-- TOC entry 2443 (class 2606 OID 36316)
+-- Name: fk_periodo; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY pago_pensiones
+    ADD CONSTRAINT fk_periodo FOREIGN KEY (id_periodo) REFERENCES periodo(id_periodo);
+
+
+--
+-- TOC entry 2384 (class 2606 OID 36321)
+-- Name: fk_persona; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY usuario
+    ADD CONSTRAINT fk_persona FOREIGN KEY (id_persona) REFERENCES persona(id_persona);
+
+
+--
+-- TOC entry 2424 (class 2606 OID 36326)
+-- Name: fk_persona; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY discapacidad_persona
+    ADD CONSTRAINT fk_persona FOREIGN KEY (id_persona) REFERENCES persona(id_persona);
+
+
+--
+-- TOC entry 2465 (class 2606 OID 36331)
+-- Name: fk_persona; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY telefono_persona
+    ADD CONSTRAINT fk_persona FOREIGN KEY (id_persona) REFERENCES persona(id_persona);
+
+
+--
+-- TOC entry 2448 (class 2606 OID 36336)
+-- Name: fk_persona; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY representante
+    ADD CONSTRAINT fk_persona FOREIGN KEY (id_representante) REFERENCES usuario(id_usuario);
+
+
+--
+-- TOC entry 2388 (class 2606 OID 36341)
+-- Name: fk_persona; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY activacion_servicio
+    ADD CONSTRAINT fk_persona FOREIGN KEY (id_persona) REFERENCES persona(id_persona);
+
+
+--
+-- TOC entry 2386 (class 2606 OID 36346)
+-- Name: fk_persona; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY acceso_sistema
+    ADD CONSTRAINT fk_persona FOREIGN KEY (id_persona) REFERENCES persona(id_persona);
+
+
+--
+-- TOC entry 2430 (class 2606 OID 36351)
+-- Name: fk_prioridad_incidencia; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY incidencia
+    ADD CONSTRAINT fk_prioridad_incidencia FOREIGN KEY (id_prioridad_incidencia) REFERENCES prioridad_incidencia(id_prioridad_incidencia);
+
+
+--
+-- TOC entry 2406 (class 2606 OID 36356)
+-- Name: fk_receptor; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY control_comunicacion
+    ADD CONSTRAINT fk_receptor FOREIGN KEY (id_receptor) REFERENCES usuario(id_usuario);
+
+
+--
+-- TOC entry 2463 (class 2606 OID 36361)
+-- Name: fk_remitente; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY solicitud_cita
+    ADD CONSTRAINT fk_remitente FOREIGN KEY (id_remitente) REFERENCES usuario(id_usuario);
+
+
+--
+-- TOC entry 2447 (class 2606 OID 36366)
+-- Name: fk_representante; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY representacion
+    ADD CONSTRAINT fk_representante FOREIGN KEY (id_representante) REFERENCES representante(id_representante);
+
+
+--
+-- TOC entry 2432 (class 2606 OID 36371)
+-- Name: fk_representante; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY justificacion
+    ADD CONSTRAINT fk_representante FOREIGN KEY (id_representante) REFERENCES representante(id_representante);
+
+
+--
+-- TOC entry 2464 (class 2606 OID 36376)
+-- Name: fk_representate; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY solicitud_cita
+    ADD CONSTRAINT fk_representate FOREIGN KEY (id_representante) REFERENCES representante(id_representante);
+
+
+--
+-- TOC entry 2454 (class 2606 OID 36381)
+-- Name: fk_seguimiento; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY seguimiento_comunicacion
+    ADD CONSTRAINT fk_seguimiento FOREIGN KEY (id_seguimiento) REFERENCES seguimiento_actividad(id_seguimiento);
+
+
+--
+-- TOC entry 2452 (class 2606 OID 36386)
+-- Name: fk_seguimiento; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY seguimiento_cita
+    ADD CONSTRAINT fk_seguimiento FOREIGN KEY (id_seguimiento) REFERENCES seguimiento_actividad(id_seguimiento);
+
+
+--
+-- TOC entry 2456 (class 2606 OID 36391)
+-- Name: fk_seguimiento; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY seguimiento_incidencia
+    ADD CONSTRAINT fk_seguimiento FOREIGN KEY (id_seguimiento) REFERENCES seguimiento_actividad(id_seguimiento);
+
+
+--
+-- TOC entry 2460 (class 2606 OID 36396)
+-- Name: fk_seguimiento; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY seguimiento_tarea
+    ADD CONSTRAINT fk_seguimiento FOREIGN KEY (id_seguimiento) REFERENCES seguimiento_actividad(id_seguimiento);
+
+
+--
+-- TOC entry 2458 (class 2606 OID 36401)
+-- Name: fk_seguimiento; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY seguimiento_justificacion
+    ADD CONSTRAINT fk_seguimiento FOREIGN KEY (id_seguimiento) REFERENCES seguimiento_actividad(id_seguimiento);
+
+
+--
+-- TOC entry 2461 (class 2606 OID 36406)
+-- Name: fk_sistema_calificaciones; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY sistema_notas
+    ADD CONSTRAINT fk_sistema_calificaciones FOREIGN KEY (id_sistema_calificaciones) REFERENCES sistema_calificaciones(id_sistema_calificaciones);
+
+
+--
+-- TOC entry 2395 (class 2606 OID 36411)
+-- Name: fk_sistema_notas; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY calificacion
+    ADD CONSTRAINT fk_sistema_notas FOREIGN KEY (id_sistema_notas) REFERENCES sistema_notas(id_sistema_notas);
+
+
+--
+-- TOC entry 2391 (class 2606 OID 36416)
+-- Name: fk_tarea; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY archivos_tarea
+    ADD CONSTRAINT fk_tarea FOREIGN KEY (id_tarea) REFERENCES tarea(id_tarea);
+
+
+--
+-- TOC entry 2412 (class 2606 OID 36421)
+-- Name: fk_tarea; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY control_tarea
+    ADD CONSTRAINT fk_tarea FOREIGN KEY (id_tarea) REFERENCES tarea(id_tarea);
+
+
+--
+-- TOC entry 2440 (class 2606 OID 36426)
+-- Name: fk_tarea; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY justificacion_tarea
+    ADD CONSTRAINT fk_tarea FOREIGN KEY (id_control_tarea) REFERENCES control_tarea(id_control_tarea);
+
+
+--
+-- TOC entry 2397 (class 2606 OID 36431)
+-- Name: fk_tarea; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY calificacion_tarea
+    ADD CONSTRAINT fk_tarea FOREIGN KEY (id_control_tarea) REFERENCES control_tarea(id_control_tarea);
+
+
+--
+-- TOC entry 2466 (class 2606 OID 36436)
+-- Name: fk_telefono; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY telefono_persona
+    ADD CONSTRAINT fk_telefono FOREIGN KEY (id_telefono) REFERENCES telefono(id_telefono);
+
+
+--
+-- TOC entry 2407 (class 2606 OID 36441)
+-- Name: fk_tipo; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY control_comunicacion
+    ADD CONSTRAINT fk_tipo FOREIGN KEY (id_tipo) REFERENCES tipo_envio_comunicacion(id_tipo_envio_comunicacion);
+
+
+--
+-- TOC entry 2389 (class 2606 OID 36446)
+-- Name: fk_tipo_actividad; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY actividad_institucion
+    ADD CONSTRAINT fk_tipo_actividad FOREIGN KEY (id_tipo) REFERENCES tipo_actividad_institucion(id_tipo_actividad);
+
+
+--
+-- TOC entry 2422 (class 2606 OID 36451)
+-- Name: fk_tipo_discapacidad; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY discapacidad
+    ADD CONSTRAINT fk_tipo_discapacidad FOREIGN KEY (id_tipo) REFERENCES tipo_discapacidad(id_tipo);
+
+
+--
+-- TOC entry 2414 (class 2606 OID 36456)
+-- Name: fk_tipo_funcionario; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY control_tipo_funcionario
+    ADD CONSTRAINT fk_tipo_funcionario FOREIGN KEY (id_tipo) REFERENCES tipo_funcionario(id_tipo);
+
+
+--
+-- TOC entry 2431 (class 2606 OID 36461)
+-- Name: fk_tipo_incidencia; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY incidencia
+    ADD CONSTRAINT fk_tipo_incidencia FOREIGN KEY (id_tipo_incidencia) REFERENCES tipo_incidencia(id_tipo_incidencia);
+
+
+--
+-- TOC entry 2383 (class 2606 OID 36466)
+-- Name: fk_tipo_telefono; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY telefono
+    ADD CONSTRAINT fk_tipo_telefono FOREIGN KEY (id_tipo) REFERENCES tipo_telefono(id_tipo);
+
+
+--
+-- TOC entry 2385 (class 2606 OID 36471)
+-- Name: fk_tipo_usuario; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY usuario
+    ADD CONSTRAINT fk_tipo_usuario FOREIGN KEY (id_tipo_usuario) REFERENCES tipo_usuario(id_tipo);
+
+
+--
+-- TOC entry 2425 (class 2606 OID 36476)
+-- Name: fk_usuario; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY estudiante
+    ADD CONSTRAINT fk_usuario FOREIGN KEY (id_estudiante) REFERENCES usuario(id_usuario);
+
+
+--
+-- TOC entry 2426 (class 2606 OID 36481)
+-- Name: fk_usuario; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY funcionario
+    ADD CONSTRAINT fk_usuario FOREIGN KEY (id_funcionario) REFERENCES usuario(id_usuario);
+
+
+--
+-- TOC entry 2450 (class 2606 OID 36486)
+-- Name: fk_usuario; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY seguimiento_actividad
+    ADD CONSTRAINT fk_usuario FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario);
+
+
+--
+-- TOC entry 2418 (class 2606 OID 36491)
+-- Name: id_tipo; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY curso
+    ADD CONSTRAINT id_tipo FOREIGN KEY (id_tipo_curso) REFERENCES tipo_curso(id_tipo_curso);
+
+
+--
+-- TOC entry 2441 (class 2606 OID 36496)
+-- Name: pk_tipo_msg_template; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY msg_template
+    ADD CONSTRAINT pk_tipo_msg_template FOREIGN KEY (id_tipo_msg_template) REFERENCES tipo_msg_template(id_tipo_msg_template);
+
+
+--
+-- TOC entry 2690 (class 0 OID 0)
+-- Dependencies: 7
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+-- Completed on 2017-01-31 00:11:50
+
+--
+-- PostgreSQL database dump complete
+--
+
