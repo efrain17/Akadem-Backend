@@ -24,13 +24,13 @@ global.pool.on('error', (err, client) => {
   console.error('idle client error', err.message, err.stack)
 })
 
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
 app.use('/', express.static(__dirname + '/public'))
-app.use('/apiPersonas', apiPersonas)
-app.all('/ag/*', (req, res) => {
+app.use('/api/personas', apiPersonas)
+app.all('/app/*', (req, res) => {
   res.status(200).sendFile(
     path.join(__dirname, '/dist/index.html'))
 })
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }))
 
 server.listen(port, () => console.log(`Server listening on port ${port}`))
