@@ -9,27 +9,25 @@ router.get('/personas', (req, res) => {
   .then(data => res.json(data))
   .catch(err =>	{
     console.log(err)
-    res.json(err)
+    res.sendStatus(500).json(err)
   })
 })
 
 router.post('/guardar-persona', (req, res) => {
-  console.log(req.body)
   guardarPersona(req.body.data)
   .then(data => res.json(data))
   .catch(err =>	{
     console.log(err)
-    res.json(err)
+    res.sendStatus(500).json(err)
   })
 })
 
 router.post('/actualizar-persona', (req, res) => {
-  console.log(req.body.data)
-  actualizarPersona(req.body.data)
+  actualizarPersona(req.body.id_persona, req.body.data)
   .then(data => res.json(data))
   .catch(err =>	{
     console.log(err)
-    res.json(err)
+    res.sendStatus(500).json(err)
   })
 })
 

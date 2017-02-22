@@ -11,9 +11,8 @@ export function guardarPersona (data) {
     '${data.fecha_nacimiento}', '02/02/2016' )`)
 }
 
-export function actualizarPersona(data) {
-  return ejecutarQuery(`UPDATE persona SET nombres = '${data.nombres}', apellidos = '${data.apellidos}', 
+export function actualizarPersona(id_persona, data) {
+  return ejecutarQuery(`UPDATE persona SET id_persona = '${data.id_persona}', nombres = '${data.nombres}', apellidos = '${data.apellidos}',
     direccion = '${data.direccion}', provincia = '${data.provincia}', ciudad = '${data.ciudad}',
-    fecha_nacimiento = '${data.fecha_nacimiento}' WHERE id_persona='${data.id_persona}';`)
+    fecha_nacimiento = '${data.fecha_nacimiento}' WHERE id_persona='${id_persona}';`)
 }
-
