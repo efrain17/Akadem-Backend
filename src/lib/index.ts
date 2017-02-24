@@ -10,3 +10,12 @@ export function ejecutarQuery (myquerry) {
     })
   })
 }
+
+export function promisseNormal (promisse, res) {
+  promisse
+  .then(data => res.json(data))
+  .catch(err =>	{
+    console.log(err)
+    res.sendStatus(500).json(err)
+  })
+}

@@ -2,6 +2,7 @@ import http from 'http'
 import express from 'express'
 import pg from 'pg'
 import apiPersonas from './personas/index'
+import apiAcademica from './estructura-academica/index'
 import path from 'path'
 import bodyParser from 'body-parser'
 
@@ -28,6 +29,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use('/', express.static(__dirname + '/public'))
 app.use('/api/personas', apiPersonas)
+app.use('/api/academica', apiAcademica)
 app.all('/app/*', (req, res) => {
   res.status(200).sendFile(
     path.join(__dirname, '/dist/index.html'))
