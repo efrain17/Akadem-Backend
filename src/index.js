@@ -32,7 +32,7 @@ app.use('/api/personas', apiPersonas)
 app.use('/api/academica', apiAcademica)
 app.all('/app/*', (req, res) => {
   res.status(200).sendFile(
-    path.join(__dirname, '/dist/index.html'))
+    path.join(__dirname, '/public/index.html'))
 })
 
 server.listen(port, () => console.log(`Server listening on port ${port}`))

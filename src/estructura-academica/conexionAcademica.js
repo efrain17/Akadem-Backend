@@ -80,4 +80,58 @@ export class Academica {
         public.periodo;`)
   }
 
+  selectCurso () {
+    return ejecutarQuery(`
+      SELECT
+        curso.id_curso,
+        curso.descripcion,
+        curso.estado,
+        grado.descripcion AS grado,
+        paralelo.descripcion AS paralelo,
+        tipo_curso.descripcion AS tipo_curso
+      FROM
+        public.curso,
+        public.grado,
+        public.paralelo,
+        public.tipo_curso
+      WHERE
+        curso.id_grado = grado.id_grado AND
+        curso.id_paralelo = paralelo.id_paralelo AND
+        curso.id_tipo_curso = tipo_curso.id_tipo_curso;`)
+  }
+
+  selectProfesor () {
+    return ejecutarQuery(`
+      SELECT
+        (persona.nombres ||' '|| persona.apellidos) AS text,
+        persona.id_persona AS id
+      FROM
+        public.persona,
+        public.tipo_usuario,
+        public.tipo_usuario_persona
+      WHERE
+        persona.id_persona = tipo_usuario_persona.id_persona AND
+        tipo_usuario_persona.id_tipo_usuario = tipo_usuario.id_tipo_usuario AND
+        tipo_usuario.descripcion = 'DOCENTE';`)
+  }
+
+  selectClase () {
+    return ejecutarQuery(`
+      SELECT
+        clase.id_clase,
+        clase.estado,
+        curso.descripcion AS curso,
+        persona.nombres||' '||persona.apellidos AS profesor,
+        asignatura.descripcion
+      FROM
+        public.clase,
+        public.persona,
+        public.curso,
+        public.asignatura
+      WHERE
+        clase.id_asignatura = asignatura.id_asignatura AND
+        clase.id_curso = curso.id_curso AND
+        clase.id_persona = persona.id_persona;`)
+  }
+
 }
