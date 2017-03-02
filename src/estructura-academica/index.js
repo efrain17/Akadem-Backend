@@ -16,8 +16,34 @@ router.get('/data-curso', (req, res) => {
   promisseNormal(obj.selectCurso(), res)
 })
 
+router.get('/clase-estudiante', (req, res) => {
+  obj.selectAsignaturaEstudiante(req.query.id)
+  .then(data => {
+    data = data.map(date => date.descripcion)
+    res.json(data)
+  })
+  .catch(err =>	res.sendStatus(500).json(err))
+})
+
+router.get('/cursos-estudiantes', (req, res) => {
+  promisseNormal(obj.selectCursosEstudiantes(), res)
+})
+
+router.get('/curso-inscrito', (req, res) => {
+  promisseNormal(obj.selectCursoInscrito(), res)
+})
+
 router.get('/clase', (req, res) => {
   promisseNormal(obj.selectClase(), res)
+})
+
+router.get('/estudiante-clase', (req, res) => {
+  promisseNormal(obj.selectEstudianteClase(), res)
+})
+
+router.get('/clases-curso', (req, res) => {
+  console.log(req.query.id)
+  promisseNormal(obj.selectClasesCurso(req.query.id), res)
 })
 
 router.get('/atributos-curso', (req, res) => {

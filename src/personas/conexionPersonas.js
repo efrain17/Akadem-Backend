@@ -12,14 +12,78 @@ export class Persona {
         '${data.provincia}', '${data.ciudad}','${data.fecha_nacimiento}', '02/02/2016' )`)
   }
 
-  actualizarPersona (id_persona, data) {
+  insertTelefonoPersona (sqlValues) {
+    if (sqlValues) {
+      return ejecutarQuery(`
+        INSERT INTO telefono_persona
+          (id_operadora, numero, propietario, id_persona, estado)
+        VALUES ` + sqlValues)
+    } else return true
+  }
+
+  insertDiscpPersona (sqlValues) {
+    if (sqlValues) {
+      return ejecutarQuery(`
+        INSERT INTO discapacidad_persona
+          (id_discapacidad, porcentaje, id_persona, estado)
+        VALUES ` + sqlValues)
+    } else return true
+  }
+
+  insertTipoUserPerson (sqlValues) {
+    if (sqlValues) {
+      return ejecutarQuery(`
+        INSERT INTO tipo_usuario_persona
+          (id_persona, id_tipo_usuario, estado)
+        VALUES ` + sqlValues)
+    } else return true
+  }
+
+  updateTelefonoPersona (sqlValues) {
+    if (sqlValues) {
+      return ejecutarQuery(`
+        UPDATE telefono_persona
+          SET  estado = false
+        WHERE ` + sqlValues)
+    } else return true
+  }
+
+  updateDiscpPersona (sqlValues) {
+    if (sqlValues) {
+      return ejecutarQuery(`
+        UPDATE discapacidad_persona
+          SET  estado = false
+        WHERE ` + sqlValues)
+    } else return true
+  }
+
+  updateTipoUserPerson (sqlValues) {
+    if (sqlValues) {
+      return ejecutarQuery(`
+        UPDATE tipo_usuario_persona
+          SET  estado = false
+        WHERE ` + sqlValues)
+    } else return true
+  }
+
+  actualizarPersona (data) {
+    return ejecutarQuery(`
+      UPDATE persona
+        SET nombres = '${data.nombres}', apellidos = '${data.apellidos}',
+        direccion = '${data.direccion}', provincia = '${data.provincia}', ciudad = '${data.ciudad}',
+        fecha_nacimiento = '${data.fecha_nacimiento}', correo = '${data.correo}'
+      WHERE
+        id_persona = '${data.id_persona}';`)
+  }
+
+  actualizarIdPersona (data, idAnterior) {
     return ejecutarQuery(`
       UPDATE persona
         SET id_persona = '${data.id_persona}', nombres = '${data.nombres}', apellidos = '${data.apellidos}',
         direccion = '${data.direccion}', provincia = '${data.provincia}', ciudad = '${data.ciudad}',
-        fecha_nacimiento = '${data.fecha_nacimiento}'
+        fecha_nacimiento = '${data.fecha_nacimiento}', correo = '${data.correo}'
       WHERE
-        id_persona='${id_persona}';`)
+        id_persona = '${idAnterior}';`)
   }
 
   selectTelefonos () {
@@ -33,7 +97,8 @@ export class Persona {
         public.persona,
         public.telefono_persona
       WHERE
-        persona.id_persona = telefono_persona.id_persona;`)
+        persona.id_persona = telefono_persona.id_persona AND
+        telefono_persona.estado;`)
   }
 
   selectDiscapacidad () {
@@ -42,14 +107,16 @@ export class Persona {
         persona.id_persona,
         discapacidad_persona.porcentaje,
         discapacidad.descripcion,
-        discapacidad_persona.id_discapacidad
+        discapacidad_persona.id_discapacidad,
+        discapacidad_persona.id_discapacidad_persona
       FROM
         public.persona,
         public.discapacidad_persona,
         public.discapacidad
       WHERE
         persona.id_persona = discapacidad_persona.id_persona AND
-        discapacidad_persona.id_discapacidad = discapacidad.id_discapacidad;`)
+        discapacidad_persona.id_discapacidad = discapacidad.id_discapacidad AND
+        discapacidad_persona.estado;`)
   }
 
   selectTipoUsuario () {
@@ -65,7 +132,8 @@ export class Persona {
         public.tipo_usuario_persona
       WHERE
         persona.id_persona = tipo_usuario_persona.id_persona AND
-        tipo_usuario_persona.id_tipo_usuario = tipo_usuario.id_tipo_usuario;`)
+        tipo_usuario_persona.id_tipo_usuario = tipo_usuario.id_tipo_usuario AND
+        tipo_usuario_persona.estado;`)
   }
 
   selectPersonas () {

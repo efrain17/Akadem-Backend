@@ -19,4 +19,3 @@ export function promisseNormal (promisse, res) {
     res.sendStatus(500).json(err)
   })
 }
-

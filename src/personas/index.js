@@ -1,8 +1,10 @@
 import express from 'express'
 import { Persona } from './conexionPersonas'
+import { LibPersona } from './libPersonas'
 import { promisseNormal } from '../lib/index'
 const router = express.Router()
 const obj = new Persona()
+const lp = new LibPersona()
 
 router.get('/xxxpersonas', (req, res) => {
   promisseNormal(obj.selectPersonas(), res)
@@ -13,7 +15,26 @@ router.post('/guardar-persona', (req, res) => {
 })
 
 router.post('/actualizar-persona', (req, res) => {
-  promisseNormal(obj.actualizarPersona(req.body.id_persona, req.body.data), res)
+  let idPersona = req.body.id_persona
+  let idPersonaData = req.body.data.id_persona
+  let dataBody = req.body.data
+  if (idPersonaData === idPersona) {
+    promisseNormal(obj.actualizarPersona(req.body.data), res)
+  } else {
+    obj.actualizarIdPersona(req.body.data, idPersona)
+    .then(data =>
+      Promise.all([
+        obj.insertTelefonoPersona(lp.insertTlfPerson(dataBody.telefono, idPersonaData)),
+        obj.insertDiscpPersona(lp.insertDscpfPerson(dataBody.discapacidad, idPersonaData)),
+        obj.insertTipoUserPerson(lp.insertTipoUsuario(dataBody.tipo_usuario, idPersonaData)),
+        obj.updateTelefonoPersona(lp.updateTlfPerson(dataBody.telefono, idPersonaData)),
+        obj.updateDiscpPersona(lp.updateDscpfPerson(dataBody.discapacidad, idPersonaData)),
+        obj.updateTipoUserPerson(lp.updateTipoUsuario(dataBody.tipo_usuario, idPersonaData))
+      ])
+    )
+    .then(data => res.sendStatus(200))
+    .catch(err =>	res.sendStatus(500).json(err))
+  }
 })
 
 router.get('/personas', (req, res) => {
