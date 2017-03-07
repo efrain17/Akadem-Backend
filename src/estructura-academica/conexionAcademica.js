@@ -173,7 +173,7 @@ export class Academica {
         clase.id_persona = persona.id_persona;`)
   }
 
-  selectEstudianteClase () {
+  selectEstudianteClaseLike (nombre) {
     return ejecutarQuery(`
       SELECT
         curso.descripcion AS additional,
@@ -188,7 +188,8 @@ export class Academica {
         persona.id_persona = clase_estudiante.id_persona AND
         clase_estudiante.id_clase = clase.id_clase AND
         clase.id_curso = curso.id_curso AND
-        clase_estudiante.estado
+        clase_estudiante.estado AND
+        (persona.nombres ILIKE '${nombre}%' OR persona.apellidos ILIKE '${nombre}%')
       GROUP BY
         curso.descripcion,
         persona.nombres,

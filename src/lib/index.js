@@ -19,3 +19,15 @@ export function promisseNormal (promisse, res) {
     res.sendStatus(500).json(err)
   })
 }
+
+export function contructSqlvalues (dataPersonas, idPersona, operation, callback) {
+  let sqlValues = ''
+  let chois = ''
+  let ch = operation === 'insert' ? ',' : '  or '
+  let dataFilter = dataPersonas.filter(data => data.operacion === operation)
+  dataFilter.map(data => {
+    sqlValues = sqlValues + chois + callback(data)
+    chois = ch
+  })
+  return sqlValues
+}

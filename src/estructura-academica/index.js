@@ -2,9 +2,11 @@ import express from 'express'
 import { Academica } from './conexionAcademica'
 import { UpdateAcademica } from './updateAcademica'
 import { promisseNormal } from '../lib/index'
+import { LibAcademica } from './libAcademica'
 const router = express.Router()
 const obj = new Academica()
 const upa = new UpdateAcademica()
+const la = new LibAcademica()
 
 router.get('/area-academica', (req, res) => {
   promisseNormal(obj.selectAreaAcademica(), res)
@@ -43,8 +45,8 @@ router.get('/clase', (req, res) => {
   promisseNormal(obj.selectClase(), res)
 })
 
-router.get('/estudiante-clase', (req, res) => {
-  promisseNormal(obj.selectEstudianteClase(), res)
+router.get('/estudiante-claseLike', (req, res) => {
+  promisseNormal(obj.selectEstudianteClaseLike(req.query.nombre), res)
 })
 
 router.get('/clases-curso', (req, res) => {
@@ -198,6 +200,14 @@ router.post('/activar-clase', (req, res) => {
 
 router.post('/desactivar-clase', (req, res) => {
   promisseNormal(upa.updateClase(req.body.id, false), res)
+})
+
+router.post('/agregar-claseEstudiante', (req, res) => {
+  let idEstudiante = req.body.data.id_estudiante
+  let clases = req.body.data.clases
+  // let sql = la.insertClaseEstudiante(clases, idEstudiante)
+  console.log(la.insertClaseEstudiante(clases, idEstudiante))
+  // promisseNormal(upa.insertClaseEstudiante(sql), res)
 })
 
 export default router

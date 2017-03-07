@@ -15,7 +15,6 @@ router.post('/actualizar-persona', (req, res) => {
   let idPersonaData = req.body.data.id_persona
   let dataBody = req.body.data
   let update
-  console.log(idPersona + ' ' + idPersonaData)
   if (idPersonaData === idPersona) update = obj.actualizarPersona(dataBody)
   else update = obj.actualizarIdPersona(dataBody, idPersona)
   update

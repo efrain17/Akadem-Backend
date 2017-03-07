@@ -48,7 +48,8 @@ export class UpdateAcademica {
     return ejecutarQuery(`
       INSERT INTO public.curso
         (id_grado, id_paralelo, id_periodo, id_tipo_curso, descripcion, estado)
-      VALUES ('${data.id_grado}', '${data.id_paralelo}', '${data.id_periodo}', '${data.id_tipo_curso}', '${data.descripcion}', true);`)
+      VALUES ('${data.id_grado}', '${data.id_paralelo}', '${data.id_periodo}', '${data.id_tipo_curso}',
+        '${data.descripcion}', true);`)
   }
 
   insertClase (data) {
@@ -119,6 +120,15 @@ export class UpdateAcademica {
       UPDATE periodo
         SET  estado = ${value}
       WHERE id_periodo = '${id}';`)
+  }
+
+  insertClaseEstudiante (sqlValues) {
+    if (sqlValues) {
+      return ejecutarQuery(`
+        INSERT INTO clase_estudiante
+          (id_clase, id_persona, estado)
+        VALUES ` + sqlValues)
+    } else return true
   }
 
 }
