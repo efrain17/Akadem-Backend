@@ -1,11 +1,17 @@
 import express from 'express'
 import { Academica } from './conexionAcademica'
+import { UpdateAcademica } from './updateAcademica'
 import { promisseNormal } from '../lib/index'
 const router = express.Router()
 const obj = new Academica()
+const upa = new UpdateAcademica()
 
 router.get('/area-academica', (req, res) => {
   promisseNormal(obj.selectAreaAcademica(), res)
+})
+
+router.get('/tipo-gradolist', (req, res) => {
+  promisseNormal(obj.selectTipoGradoList(), res)
 })
 
 router.get('/asignatura', (req, res) => {
@@ -100,6 +106,98 @@ router.get('/atributos-clase', (req, res) => {
     res.json(estrClase)
   })
   .catch(err =>	res.sendStatus(500).json(err))
+})
+
+router.get('/profesoresLike', (req, res) => {
+  promisseNormal(obj.selectProfesorLike(req.query.nombre), res)
+})
+
+router.post('/agregar-area', (req, res) => {
+  promisseNormal(upa.insertAreaAcademica(req.body.data.descripcion), res)
+})
+
+router.post('/agregar-tipogrado', (req, res) => {
+  promisseNormal(upa.insertTipoGrado(req.body.data.descripcion), res)
+})
+
+router.post('/agregar-grado', (req, res) => {
+  promisseNormal(upa.insertGrado(req.body.data), res)
+})
+
+router.post('/agregar-tipocurso', (req, res) => {
+  promisseNormal(upa.insertTipoCurso(req.body.data), res)
+})
+
+router.post('/agregar-paralelo', (req, res) => {
+  promisseNormal(upa.insertParalelo(req.body.data), res)
+})
+
+router.post('/agregar-periodo', (req, res) => {
+  promisseNormal(upa.insertPeriodo(req.body.data), res)
+})
+
+router.post('/desactivar-area', (req, res) => {
+  promisseNormal(upa.updateAreaAcademica(req.body.id), res)
+})
+
+router.post('/desactivar-tipogrado', (req, res) => {
+  promisseNormal(upa.updateTipoGrado(req.body.id), res)
+})
+
+router.post('/desactivar-grado', (req, res) => {
+  promisseNormal(upa.updateGrado(req.body.id), res)
+})
+
+router.post('/desactivar-tipocurso', (req, res) => {
+  promisseNormal(upa.updateTipoCurso(req.body.id), res)
+})
+
+router.post('/desactivar-paralelo', (req, res) => {
+  promisseNormal(upa.updateParalelo(req.body.id), res)
+})
+
+router.post('/desactivar-periodo', (req, res) => {
+  promisseNormal(upa.updatePeriodo(req.body.id, false), res)
+})
+
+router.post('/activar-periodo', (req, res) => {
+  promisseNormal(upa.updatePeriodo(req.body.id, true), res)
+})
+
+router.post('/agregar-asignatura', (req, res) => {
+  promisseNormal(upa.insertAsignatura(req.body.data, true), res)
+})
+
+router.post('/agregar-curso', (req, res) => {
+  promisseNormal(upa.insertCurso(req.body.data, true), res)
+})
+
+router.post('/desactivar-asignatura', (req, res) => {
+  promisseNormal(upa.updateAsignatura(req.body.id, false), res)
+})
+
+router.post('/activar-asignatura', (req, res) => {
+  promisseNormal(upa.updateAsignatura(req.body.id, true), res)
+})
+
+router.post('/desactivar-curso', (req, res) => {
+  promisseNormal(upa.updateCurso(req.body.id, false), res)
+})
+
+router.post('/activar-curso', (req, res) => {
+  promisseNormal(upa.updateCurso(req.body.id, true), res)
+})
+
+router.post('/agregar-clase', (req, res) => {
+  promisseNormal(upa.insertClase(req.body.data, true), res)
+})
+
+router.post('/activar-clase', (req, res) => {
+  promisseNormal(upa.updateClase(req.body.id, true), res)
+})
+
+router.post('/desactivar-clase', (req, res) => {
+  promisseNormal(upa.updateClase(req.body.id, false), res)
 })
 
 export default router

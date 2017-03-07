@@ -2,8 +2,7 @@ export class LibPersona {
 
   insertTlfPerson (dataTelefono, idPersona) {
     return this.contructSqlvalues(dataTelefono, idPersona, 'insert', data => {
-      return `('${data.id_operadora}', '${data.numero}', '${data.propietario}',
-        '${idPersona}', true)`
+      return `('${data.id_operadora}', '${data.numero}', '${data.propietario}', '${idPersona}', true)`
     })
   }
 
@@ -40,7 +39,7 @@ export class LibPersona {
   contructSqlvalues (dataPersonas, idPersona, operation, callback) {
     let sqlValues = ''
     let chois = ''
-    let ch = operation === 'insert' ? ',' : 'or'
+    let ch = operation === 'insert' ? ',' : '  or '
     let dataFilter = dataPersonas.filter(data => data.operacion === operation)
     dataFilter.map(data => {
       sqlValues = sqlValues + chois + callback(data)

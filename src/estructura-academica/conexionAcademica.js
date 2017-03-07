@@ -9,7 +9,9 @@ export class Academica {
         area_academica.id_area_academica,
         area_academica.estado
       FROM
-        public.area_academica;`)
+        public.area_academica
+      WHERE
+        estado;`)
   }
 
   selectTipoGrado () {
@@ -19,7 +21,20 @@ export class Academica {
         tipo_grado.descripcion,
         tipo_grado.estado
       FROM
-        public.tipo_grado;`)
+        public.tipo_grado
+      WHERE
+        estado;`)
+  }
+
+  selectTipoGradoList () {
+    return ejecutarQuery(`
+      SELECT
+        tipo_grado.id_tipo_grado AS id,
+        tipo_grado.descripcion AS text
+      FROM
+        public.tipo_grado
+      WHERE
+        estado;`)
   }
 
   selectGrado () {
@@ -29,7 +44,9 @@ export class Academica {
         grado.id_grado,
         grado.estado
       FROM
-        public.grado;`)
+        public.grado
+      WHERE
+        estado;`)
   }
 
   selectParalelo () {
@@ -39,7 +56,9 @@ export class Academica {
         paralelo.id_paralelo,
         paralelo.estado
       FROM
-        public.paralelo;`)
+        public.paralelo
+      WHERE
+        estado;`)
   }
 
   selectAsignatura () {
@@ -65,7 +84,9 @@ export class Academica {
         tipo_curso.descripcion,
         tipo_curso.estado
       FROM
-        public.tipo_curso;`)
+        public.tipo_curso
+      WHERE
+        estado;`)
   }
 
   selectPeriodo () {
@@ -112,7 +133,25 @@ export class Academica {
       WHERE
         persona.id_persona = tipo_usuario_persona.id_persona AND
         tipo_usuario_persona.id_tipo_usuario = tipo_usuario.id_tipo_usuario AND
-        tipo_usuario.descripcion = 'DOCENTE';`)
+        tipo_usuario.descripcion = 'DOCENTE' AND
+	      tipo_usuario_persona.estado;`)
+  }
+
+  selectProfesorLike (nombre) {
+    return ejecutarQuery(`
+      SELECT
+        (persona.nombres ||' '|| persona.apellidos) AS text,
+        persona.id_persona AS id
+      FROM
+        public.persona,
+        public.tipo_usuario,
+        public.tipo_usuario_persona
+      WHERE
+        persona.id_persona = tipo_usuario_persona.id_persona AND
+        tipo_usuario_persona.id_tipo_usuario = tipo_usuario.id_tipo_usuario AND
+        tipo_usuario.descripcion = 'DOCENTE' AND
+	      tipo_usuario_persona.estado AND
+        (persona.nombres ILIKE '${nombre}%' OR persona.apellidos ILIKE '${nombre}%');`)
   }
 
   selectClase () {
@@ -122,7 +161,7 @@ export class Academica {
         clase.estado,
         curso.descripcion AS curso,
         persona.nombres||' '||persona.apellidos AS profesor,
-        asignatura.descripcion
+        asignatura.descripcion as asignatura
       FROM
         public.clase,
         public.persona,

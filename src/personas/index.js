@@ -6,10 +6,6 @@ const router = express.Router()
 const obj = new Persona()
 const lp = new LibPersona()
 
-router.get('/xxxpersonas', (req, res) => {
-  promisseNormal(obj.selectPersonas(), res)
-})
-
 router.post('/guardar-persona', (req, res) => {
   promisseNormal(obj.guardarPersona(req.body.data), res)
 })
@@ -18,23 +14,23 @@ router.post('/actualizar-persona', (req, res) => {
   let idPersona = req.body.id_persona
   let idPersonaData = req.body.data.id_persona
   let dataBody = req.body.data
-  if (idPersonaData === idPersona) {
-    promisseNormal(obj.actualizarPersona(req.body.data), res)
-  } else {
-    obj.actualizarIdPersona(req.body.data, idPersona)
-    .then(data =>
-      Promise.all([
-        obj.insertTelefonoPersona(lp.insertTlfPerson(dataBody.telefono, idPersonaData)),
-        obj.insertDiscpPersona(lp.insertDscpfPerson(dataBody.discapacidad, idPersonaData)),
-        obj.insertTipoUserPerson(lp.insertTipoUsuario(dataBody.tipo_usuario, idPersonaData)),
-        obj.updateTelefonoPersona(lp.updateTlfPerson(dataBody.telefono, idPersonaData)),
-        obj.updateDiscpPersona(lp.updateDscpfPerson(dataBody.discapacidad, idPersonaData)),
-        obj.updateTipoUserPerson(lp.updateTipoUsuario(dataBody.tipo_usuario, idPersonaData))
-      ])
-    )
-    .then(data => res.sendStatus(200))
-    .catch(err =>	res.sendStatus(500).json(err))
-  }
+  let update
+  console.log(idPersona + ' ' + idPersonaData)
+  if (idPersonaData === idPersona) update = obj.actualizarPersona(dataBody)
+  else update = obj.actualizarIdPersona(dataBody, idPersona)
+  update
+  .then(data =>
+    Promise.all([
+      obj.insertTelefonoPersona(lp.insertTlfPerson(dataBody.telefono, idPersonaData)),
+      obj.insertDiscpPersona(lp.insertDscpfPerson(dataBody.discapacidad, idPersonaData)),
+      obj.insertTipoUserPerson(lp.insertTipoUsuario(dataBody.tipo_usuario, idPersonaData)),
+      obj.updateTelefonoPersona(lp.updateTlfPerson(dataBody.telefono, idPersonaData)),
+      obj.updateDiscpPersona(lp.updateDscpfPerson(dataBody.discapacidad, idPersonaData)),
+      obj.updateTipoUserPerson(lp.updateTipoUsuario(dataBody.tipo_usuario, idPersonaData))
+    ])
+  )
+  .then(data => res.sendStatus(200))
+  .catch(err =>	res.sendStatus(500).json(err))
 })
 
 router.get('/personas', (req, res) => {

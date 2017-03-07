@@ -15,7 +15,6 @@ export class Persona {
   insertTelefonoPersona (sqlValues) {
     if (sqlValues) {
       return ejecutarQuery(`
-        INSERT INTO telefono_persona
           (id_operadora, numero, propietario, id_persona, estado)
         VALUES ` + sqlValues)
     } else return true
@@ -67,6 +66,7 @@ export class Persona {
   }
 
   actualizarPersona (data) {
+    console.log('update persona')
     return ejecutarQuery(`
       UPDATE persona
         SET nombres = '${data.nombres}', apellidos = '${data.apellidos}',
