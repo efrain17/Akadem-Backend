@@ -15,6 +15,7 @@ export class Persona {
   insertTelefonoPersona (sqlValues) {
     if (sqlValues) {
       return ejecutarQuery(`
+      INSERT INTO telefono_persona
           (id_operadora, numero, propietario, id_persona, estado)
         VALUES ` + sqlValues)
     } else return true

@@ -17,15 +17,15 @@ router.get('/tipo-gradolist', (req, res) => {
 })
 
 router.get('/asignatura', (req, res) => {
-  promisseNormal(obj.selectAsignatura(), res)
+  promisseNormal(obj.selectAsignatura(false), res)
 })
 
 router.get('/data-curso', (req, res) => {
-  promisseNormal(obj.selectCurso(), res)
+  promisseNormal(obj.selectCurso(false), res)
 })
 
 router.get('/clase-estudiante', (req, res) => {
-  obj.selectAsignaturaEstudiante(req.query.id)
+  obj.selectAsignaturaEstudiante(req.query.id, req.query.curso)
   .then(data => {
     data = data.map(date => date.descripcion)
     res.json(data)
@@ -96,11 +96,10 @@ router.get('/estructura-academica', (req, res) => {
 })
 
 router.get('/atributos-clase', (req, res) => {
-  let estrClase = { 'profesor': [], 'curso': [], 'asignatura': [] }
+  let estrClase = { 'curso': [], 'asignatura': [] }
   Promise.all([
-    obj.selectProfesor(),
-    obj.selectCurso(),
-    obj.selectAsignatura()])
+    obj.selectCurso(true),
+    obj.selectAsignatura(true)])
   .then(data => {
     estrClase.profesor = data[0]
     estrClase.curso = data[1]
@@ -205,9 +204,7 @@ router.post('/desactivar-clase', (req, res) => {
 router.post('/agregar-claseEstudiante', (req, res) => {
   let idEstudiante = req.body.data.id_estudiante
   let clases = req.body.data.clases
-  // let sql = la.insertClaseEstudiante(clases, idEstudiante)
-  console.log(la.insertClaseEstudiante(clases, idEstudiante))
-  // promisseNormal(upa.insertClaseEstudiante(sql), res)
+  promisseNormal(upa.insertClaseEstudiante(la.insertClaseEstudiante(clases, idEstudiante)), res)
 })
 
 export default router

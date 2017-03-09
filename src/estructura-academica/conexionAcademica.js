@@ -61,20 +61,20 @@ export class Academica {
         estado;`)
   }
 
-  selectAsignatura () {
+  selectAsignatura (bool) {
     return ejecutarQuery(`
       SELECT
         asignatura.descripcion,
         asignatura.id_asignatura,
-        asignatura.id_area_academica,
-        area_academica.id_area_academica,
         area_academica.descripcion AS area_academica,
         asignatura.estado
       FROM
         public.asignatura,
         public.area_academica
       WHERE
-        asignatura.id_area_academica = area_academica.id_area_academica;`)
+        asignatura.id_area_academica = area_academica.id_area_academica AND
+        (asignatura.estado = (${bool} OR false) OR
+        asignatura.estado = (${bool} OR true) )`)
   }
 
   selectTipoCurso () {
@@ -101,7 +101,7 @@ export class Academica {
         public.periodo;`)
   }
 
-  selectCurso () {
+  selectCurso (bool) {
     return ejecutarQuery(`
       SELECT
         curso.id_curso,
@@ -118,23 +118,9 @@ export class Academica {
       WHERE
         curso.id_grado = grado.id_grado AND
         curso.id_paralelo = paralelo.id_paralelo AND
-        curso.id_tipo_curso = tipo_curso.id_tipo_curso;`)
-  }
-
-  selectProfesor () {
-    return ejecutarQuery(`
-      SELECT
-        (persona.nombres ||' '|| persona.apellidos) AS text,
-        persona.id_persona AS id
-      FROM
-        public.persona,
-        public.tipo_usuario,
-        public.tipo_usuario_persona
-      WHERE
-        persona.id_persona = tipo_usuario_persona.id_persona AND
-        tipo_usuario_persona.id_tipo_usuario = tipo_usuario.id_tipo_usuario AND
-        tipo_usuario.descripcion = 'DOCENTE' AND
-	      tipo_usuario_persona.estado;`)
+        curso.id_tipo_curso = tipo_curso.id_tipo_curso AND
+        (curso.estado = (${bool} OR false) OR
+        curso.estado = (${bool} OR true) );`)
   }
 
   selectProfesorLike (nombre) {
@@ -176,26 +162,57 @@ export class Academica {
   selectEstudianteClaseLike (nombre) {
     return ejecutarQuery(`
       SELECT
-        curso.descripcion AS additional,
-        persona.nombres||' '||persona.apellidos AS text,
-        persona.id_persona AS id
-      FROM
-        public.persona,
-        public.clase_estudiante,
-        public.clase,
-        public.curso
-      WHERE
-        persona.id_persona = clase_estudiante.id_persona AND
-        clase_estudiante.id_clase = clase.id_clase AND
-        clase.id_curso = curso.id_curso AND
-        clase_estudiante.estado AND
-        (persona.nombres ILIKE '${nombre}%' OR persona.apellidos ILIKE '${nombre}%')
-      GROUP BY
-        curso.descripcion,
-        persona.nombres,
-        curso.id_curso,
-        persona.id_persona,
-        persona.apellidos;`)
+         id, text, MAX (additional) as additional
+      FROM (
+        (SELECT
+          curso.descripcion AS additional,
+          persona.nombres||' '||persona.apellidos AS text,
+          persona.id_persona AS id
+        FROM
+          public.persona,
+          public.clase_estudiante,
+          public.clase,
+          public.curso
+        WHERE
+          persona.id_persona = clase_estudiante.id_persona AND
+          clase_estudiante.id_clase = clase.id_clase AND
+          clase.id_curso = curso.id_curso AND
+          clase_estudiante.estado
+        GROUP BY
+          curso.descripcion,
+          persona.nombres,
+          curso.id_curso,
+          persona.id_persona,
+          persona.apellidos
+        HAVING
+          persona.nombres||' '||persona.apellidos ILIKE '%${nombre}%' OR
+          persona.id_persona ILIKE '${nombre}%'
+        LIMIT 15)
+        UNION
+        (SELECT
+          '',
+          persona.nombres||' '||persona.apellidos AS text,
+          persona.id_persona AS id
+        FROM
+          public.persona,
+          public.tipo_usuario_persona,
+          public.tipo_usuario
+        WHERE
+          persona.id_persona = tipo_usuario_persona.id_persona AND
+          tipo_usuario_persona.id_tipo_usuario = tipo_usuario.id_tipo_usuario AND
+          tipo_usuario.descripcion = 'ESTUDIANTE' AND
+          tipo_usuario_persona.estado
+        GROUP BY
+          persona.nombres,
+          persona.id_persona,
+          persona.apellidos
+        HAVING
+          persona.nombres||' '||persona.apellidos ILIKE '%${nombre}%' OR
+          persona.id_persona ILIKE '${nombre}%'
+        LIMIT 15)
+      ) As v
+      GROUP BY text, id
+      LIMIT 15`)
   }
 
   selectCursosEstudiantes () {
@@ -204,7 +221,8 @@ export class Academica {
         curso.descripcion AS curso,
         persona.nombres||' '||persona.apellidos AS nombre,
         persona.id_persona AS id_estudiante,
-        curso.id_curso AS id_curso
+        curso.id_curso AS id_curso,
+        MAX(CAST(clase_estudiante.estado AS INT)) AS estado
       FROM
         public.persona,
         public.clase_estudiante,
@@ -213,8 +231,7 @@ export class Academica {
       WHERE
         persona.id_persona = clase_estudiante.id_persona AND
         clase_estudiante.id_clase = clase.id_clase AND
-        clase.id_curso = curso.id_curso AND
-        clase_estudiante.estado
+        clase.id_curso = curso.id_curso
       GROUP BY
         curso.descripcion,
         persona.nombres,
@@ -223,7 +240,7 @@ export class Academica {
         persona.apellidos;`)
   }
 
-  selectAsignaturaEstudiante (idEstudiante) {
+  selectAsignaturaEstudiante (idEstudiante, idCurso) {
     return ejecutarQuery(`
       SELECT
         asignatura.descripcion
@@ -236,7 +253,7 @@ export class Academica {
         persona.id_persona = clase_estudiante.id_persona AND
         clase_estudiante.id_clase = clase.id_clase AND
         asignatura.id_asignatura = clase.id_clase AND
-        clase_estudiante.estado AND
+        clase.id_curso = '${idCurso}' AND
         persona.id_persona = '${idEstudiante}';`)
   }
 
@@ -272,7 +289,8 @@ export class Academica {
         curso.id_curso = clase.id_curso AND
         clase.id_persona = persona.id_persona AND
         asignatura.id_asignatura = clase.id_asignatura AND
-        curso.id_curso = '${idCurso}';`)
+        curso.id_curso = '${idCurso}' AND
+        clase.estado;`)
   }
 
 }
